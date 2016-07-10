@@ -16,6 +16,7 @@ namespace HME_RateDisplay
         SignalClock rateDisplaySignalClock;
         int currentStartIndex = -1;
         int currentStopIndex = -1;
+        Button goBackButton;
 
         public FormRateDisplay()
         {
@@ -36,8 +37,27 @@ namespace HME_RateDisplay
             rateDisplayContentPanel = new RateDisplayContentPanel(SCREEN_WIDTH, SCREEN_HEIGHT - rateDisplayHeaderPanel.Height);
             rateDisplayContentPanel.Location = new Point(0, rateDisplayHeaderPanel.Height);
 
+            goBackButton = new Button();
+            goBackButton.BackColor = Color.White;
+            goBackButton.Width = 20;
+            goBackButton.Height = 20;
+            goBackButton.Location = new Point(0,0);
+            goBackButton.Click += new EventHandler(GoBackButtonClicked);
+
+            rateDisplayHeaderPanel.Controls.Add(goBackButton);
+
             this.Controls.Add(rateDisplayHeaderPanel);
             this.Controls.Add(rateDisplayContentPanel);
+        }
+
+        void GoBackButtonClicked(object sender, EventArgs e)
+        {
+            FormMainMenu instanceFormMainMenu = FormsManager.GetFormMainMenu();
+            instanceFormMainMenu.Visible = true;
+            instanceFormMainMenu.Enabled = true;
+           
+            instanceFormMainMenu.BringToFront();
+            this.Visible = false;
         }
 
         public void RefreshUI()
@@ -80,7 +100,7 @@ namespace HME_RateDisplay
     public class RateDisplayContentPanel : Panel
     {
         public RateDisplaySingleDataRowPanel[] singleDataRowPanelList;
-        public String[] currencyKeyArr = { "USD", "EUR", "CNY", "SGD", "JPY", "AUD", "MYR" };
+        public String[] currencyKeyArr = { "USD", "GBP", "EUR", "AUD", "CNY", "HKD", "SGD", "JPY", "MYR", "TWD", "KRW" };
         int ROW_COUNT_PER_PAGE = -1;
 
         public RateDisplayContentPanel(int width, int height)
@@ -281,7 +301,7 @@ namespace HME_RateDisplay
             headerTextLabel.TextAlign = ContentAlignment.MiddleCenter;
             headerTextLabel.Font = new Font(this.Font.FontFamily, 50);
             headerTextLabel.Text = "Hatyai  Money  Exchange";
-            headerTextLabel.Location = new Point((this.Width - headerTextLabel.Width) / 2 , 100);
+            headerTextLabel.Location = new Point((this.Width - headerTextLabel.Width) / 2 , (this.Height - headerTextLabel.Height) / 2);
 
             this.Controls.Add(headerTextLabel);
         }

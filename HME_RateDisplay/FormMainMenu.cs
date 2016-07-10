@@ -16,6 +16,7 @@ namespace HME_RateDisplay
         Button exitButton;
         FormFadeView fadeForm;
         FormLargeMessageBox confirmExitMessageBox;
+        RateDisplayHeaderPanel headerPanel;
 
         public FormMainMenu()
         {
@@ -67,6 +68,9 @@ namespace HME_RateDisplay
             exitButton.Text = "ออกจากโปรแกรม";
             exitButton.Click += new EventHandler(ExitButtonClicked);
 
+            headerPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH , 260);
+
+            this.Controls.Add(headerPanel);
             this.Controls.Add(exitButton);
             this.Controls.Add(rateDisplayButton);
             this.Controls.Add(settingButton);

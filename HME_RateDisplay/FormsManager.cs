@@ -66,6 +66,15 @@ namespace HME_RateDisplay
             return Instance.instanceFormBaseBackgroundView;
         }
 
+        public static FormMainMenu GetFormMainMenu()
+        {
+            if (Instance.instanceFormMainMenu == null)
+            {
+                Instance.instanceFormMainMenu = new FormMainMenu();
+            }
+            return Instance.instanceFormMainMenu;
+        }
+
         public static void SetFormMainMenu(FormMainMenu formMainMenu)
         {
             Instance.instanceFormMainMenu = formMainMenu;

@@ -42,6 +42,15 @@ namespace HME_RateDisplay
             return instance.exchangeRateDataObjectDict[key];
         }
 
+        public static void SetExchangeRateObject(String key, ExchangeRateDataObject obj)
+        {
+            if (instance.exchangeRateDataObjectDict.ContainsKey(key))
+            {
+                instance.exchangeRateDataObjectDict.Remove(key);
+            }
+            instance.exchangeRateDataObjectDict.Add(key, obj);
+        }
+
         public static void LoadData()
         {
             string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);
@@ -78,7 +87,7 @@ namespace HME_RateDisplay
                     String imageName = "Flag" + currencyKey + ".jpg";
                     obj.countryFlagImage = Util.GetImageFromImageResources(imageName);
 
-                    instance.exchangeRateDataObjectDict.Add(currencyKey , obj);
+                    SetExchangeRateObject(currencyKey, obj);
                 }
             }
         }
