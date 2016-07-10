@@ -31,13 +31,15 @@ namespace HME_RateDisplay
         }
 
         public void RefreshUI()
-        { 
-        
+        {
+            ExchangeRateDataManager.LoadData();
         }
     }
 
     public class RateDisplayContentPanel : Panel
     {
+        RateDisplaySingleDataRowPanel[] singleDataRowPanelList;
+
         public RateDisplayContentPanel(int width, int height)
         {
             this.Width = width;
@@ -46,13 +48,32 @@ namespace HME_RateDisplay
 
             int gapY = 7;
             int gapX = 7;
-            for (int i = 0; i < 5; i++)
+            int rateDisplaySingleDataRowHeight = 100;
+            int rowCountPerPage = (int)(this.Height / (rateDisplaySingleDataRowHeight + gapY));
+            singleDataRowPanelList = new RateDisplaySingleDataRowPanel[rowCountPerPage - 1];
+           
+            for (int i = 0; i < rowCountPerPage; i++)
             {
-                RateDisplaySingleDataRowPanel rateDisplaySingleDataRowPanel = new RateDisplaySingleDataRowPanel(this.Width - gapX * 2 , 100);
+                RateDisplaySingleDataRowPanel rateDisplaySingleDataRowPanel = new RateDisplaySingleDataRowPanel(this.Width - gapX * 2, rateDisplaySingleDataRowHeight);
                 rateDisplaySingleDataRowPanel.Location = new Point(gapX, gapY + (rateDisplaySingleDataRowPanel.Height + gapY) * i);
-                rateDisplaySingleDataRowPanel.SetTextCurrencyName("USD");
-                rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("35");
-                rateDisplaySingleDataRowPanel.SetTextCurrencySell("36");
+
+                if (i == 0)
+                {
+                    rateDisplaySingleDataRowPanel.SetIsHeaderRow(true);
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyName("Currency");
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("Buy");
+                    rateDisplaySingleDataRowPanel.SetTextCurrencySell("Sell");
+                }
+                else
+                {
+                    rateDisplaySingleDataRowPanel.SetIsHeaderRow(false);
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyName("USD");
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("35.12");
+                    rateDisplaySingleDataRowPanel.SetTextCurrencySell("36.32");
+
+                    singleDataRowPanelList[i - 1] = rateDisplaySingleDataRowPanel;
+                }
+
 
                 this.Controls.Add(rateDisplaySingleDataRowPanel);
             }
@@ -61,21 +82,21 @@ namespace HME_RateDisplay
 
     public class RateDisplaySingleDataRowPanel : Panel
     {
-        PictureBox countryFlagImage;
+        PictureBox countryFlagPictureBox;
         Label currencyNameLabel;
         Label currencyBuyLabel;
         Label currencySellLabel;
         Label verticalLineLabel1;
         Label verticalLineLabel2;
 
+        int gapY = 7;
+        int gapX = 7;
+
         public RateDisplaySingleDataRowPanel(int width, int height)
         {
             this.Width = width;
             this.Height = height;
             this.BackColor = Color.Black;
-
-            int gapY = 7;
-            int gapX = 7;
 
             verticalLineLabel1 = new Label();
             verticalLineLabel1.BackColor = Color.Gray;
@@ -90,17 +111,17 @@ namespace HME_RateDisplay
             verticalLineLabel1.Location = new Point((int)(this.Width * 0.6) , 0);
             verticalLineLabel2.Location = new Point((int)(this.Width * 0.8) , 0);
 
-            countryFlagImage = new PictureBox();
-            countryFlagImage.Height = this.Height - gapY * 2;
-            countryFlagImage.Width = (int)(countryFlagImage.Height * 1.5);
-            countryFlagImage.Location = new Point(gapX, gapY);
-            countryFlagImage.SizeMode = PictureBoxSizeMode.Zoom;
+            countryFlagPictureBox = new PictureBox();
+            countryFlagPictureBox.Height = this.Height - gapY * 2;
+            countryFlagPictureBox.Width = (int)(countryFlagPictureBox.Height * 1.5);
+            countryFlagPictureBox.Location = new Point(gapX, gapY);
+            countryFlagPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             currencyNameLabel = new Label();
             currencyNameLabel.ForeColor = Color.White;
-            currencyNameLabel.Width = verticalLineLabel1.Location.X - countryFlagImage.Width;
+            currencyNameLabel.Width = verticalLineLabel1.Location.X - countryFlagPictureBox.Width;
             currencyNameLabel.Height = this.Height - gapY * 2;
-            currencyNameLabel.Location = new Point(countryFlagImage.Location.X + countryFlagImage.Width + gapX ,
+            currencyNameLabel.Location = new Point(countryFlagPictureBox.Location.X + countryFlagPictureBox.Width + gapX ,
                                                     gapY);
             currencyNameLabel.Font = new Font(this.Font.FontFamily, 40);
 
@@ -109,7 +130,7 @@ namespace HME_RateDisplay
             currencyBuyLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX;
             currencyBuyLabel.Height = this.Height - gapY * 2;
             currencyBuyLabel.Location = new Point(verticalLineLabel1.Location.X + gapX , gapY);
-            currencyBuyLabel.Font = new Font(this.Font.FontFamily, 50);
+            currencyBuyLabel.Font = new Font(this.Font.FontFamily, 40);
             currencyBuyLabel.TextAlign = ContentAlignment.MiddleRight;
 
             currencySellLabel = new Label();
@@ -117,15 +138,39 @@ namespace HME_RateDisplay
             currencySellLabel.Width = this.Width - verticalLineLabel2.Location.X - gapX;
             currencySellLabel.Height = this.Height - gapY * 2;
             currencySellLabel.Location = new Point(verticalLineLabel2.Location.X + gapX , gapY);
-            currencySellLabel.Font = new Font(this.Font.FontFamily, 50);
+            currencySellLabel.Font = new Font(this.Font.FontFamily, 40);
             currencySellLabel.TextAlign = ContentAlignment.MiddleRight;
 
             this.Controls.Add(verticalLineLabel1);
             this.Controls.Add(verticalLineLabel2);
-            this.Controls.Add(countryFlagImage);
+            this.Controls.Add(countryFlagPictureBox);
             this.Controls.Add(currencyNameLabel);
             this.Controls.Add(currencyBuyLabel);
             this.Controls.Add(currencySellLabel);
+        }
+
+        public void SetIsHeaderRow(bool flag)
+        {
+            currencyBuyLabel.TextAlign = flag ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
+            currencySellLabel.TextAlign = flag ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
+            
+            if (flag)
+            {
+                currencyNameLabel.Location = new Point((verticalLineLabel1.Location.X - currencyNameLabel.Width) / 2 , gapY);
+                currencyNameLabel.TextAlign = ContentAlignment.MiddleCenter;
+                currencyNameLabel.ForeColor = Color.PowderBlue;
+                currencyBuyLabel.ForeColor = Color.PowderBlue;
+                currencySellLabel.ForeColor = Color.PowderBlue;
+            }
+            else 
+            {
+                currencyNameLabel.Location = new Point(countryFlagPictureBox.Location.X + countryFlagPictureBox.Width + gapX,
+                                            gapY);
+                currencyNameLabel.TextAlign = ContentAlignment.MiddleLeft;
+                currencyNameLabel.ForeColor = Color.White;
+                currencyBuyLabel.ForeColor = Color.LawnGreen;
+                currencySellLabel.ForeColor = Color.Yellow;
+            }
         }
 
         public void SetTextCurrencyBuy(String text)
