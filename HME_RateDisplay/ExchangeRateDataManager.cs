@@ -13,8 +13,8 @@ namespace HME_RateDisplay
         private Dictionary<string, ExchangeRateDataObject> exchangeRateDataObjectDict;
 
         public ExchangeRateDataManager()
-        { 
-        
+        {
+            exchangeRateDataObjectDict = new Dictionary<string, ExchangeRateDataObject>();
         }
 
         public static ExchangeRateDataManager Instance
@@ -75,6 +75,8 @@ namespace HME_RateDisplay
                     obj.currencyText = currencyKey;
                     obj.buyText = buyRate;
                     obj.sellText = sellRate;
+                    String imageName = "Flag" + currencyKey + ".jpg";
+                    obj.countryFlagImage = Util.GetImageFromImageResources(imageName);
 
                     instance.exchangeRateDataObjectDict.Add(currencyKey , obj);
                 }

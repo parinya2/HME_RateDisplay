@@ -11,19 +11,23 @@ namespace HME_RateDisplay
 {
     public partial class FormRateDisplay : FixedSizeForm
     {
+        RateDisplayHeaderPanel rateDisplayHeaderPanel;
+        RateDisplayContentPanel rateDisplayContentPanel;
+
         public FormRateDisplay()
         {
             InitializeComponent();
+            ExchangeRateDataManager.InitInstance();
 
             RenderUI();
         }
 
         public void RenderUI()
         {
-            RateDisplayHeaderPanel rateDisplayHeaderPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH, (int)(SCREEN_HEIGHT * 0.3));
+            rateDisplayHeaderPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH, (int)(SCREEN_HEIGHT * 0.3));
             rateDisplayHeaderPanel.Location = new Point(0 , 0);
             
-            RateDisplayContentPanel rateDisplayContentPanel = new RateDisplayContentPanel(SCREEN_WIDTH, SCREEN_HEIGHT - rateDisplayHeaderPanel.Height);
+            rateDisplayContentPanel = new RateDisplayContentPanel(SCREEN_WIDTH, SCREEN_HEIGHT - rateDisplayHeaderPanel.Height);
             rateDisplayContentPanel.Location = new Point(0, rateDisplayHeaderPanel.Height);
 
             this.Controls.Add(rateDisplayHeaderPanel);
@@ -33,12 +37,15 @@ namespace HME_RateDisplay
         public void RefreshUI()
         {
             ExchangeRateDataManager.LoadData();
+            rateDisplayContentPanel.FillDataIntoPanel();
         }
     }
 
     public class RateDisplayContentPanel : Panel
     {
         RateDisplaySingleDataRowPanel[] singleDataRowPanelList;
+        String[] currencyKeyArr = { "USD", "EUR", "CNY", "SGD" };
+        int ROW_COUNT_PER_PAGE = -1;
 
         public RateDisplayContentPanel(int width, int height)
         {
@@ -49,10 +56,10 @@ namespace HME_RateDisplay
             int gapY = 7;
             int gapX = 7;
             int rateDisplaySingleDataRowHeight = 100;
-            int rowCountPerPage = (int)(this.Height / (rateDisplaySingleDataRowHeight + gapY));
-            singleDataRowPanelList = new RateDisplaySingleDataRowPanel[rowCountPerPage - 1];
-           
-            for (int i = 0; i < rowCountPerPage; i++)
+            ROW_COUNT_PER_PAGE = (int)(this.Height / (rateDisplaySingleDataRowHeight + gapY));
+            singleDataRowPanelList = new RateDisplaySingleDataRowPanel[ROW_COUNT_PER_PAGE - 1];
+
+            for (int i = 0; i < ROW_COUNT_PER_PAGE; i++)
             {
                 RateDisplaySingleDataRowPanel rateDisplaySingleDataRowPanel = new RateDisplaySingleDataRowPanel(this.Width - gapX * 2, rateDisplaySingleDataRowHeight);
                 rateDisplaySingleDataRowPanel.Location = new Point(gapX, gapY + (rateDisplaySingleDataRowPanel.Height + gapY) * i);
@@ -63,19 +70,39 @@ namespace HME_RateDisplay
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName("Currency");
                     rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("Buy");
                     rateDisplaySingleDataRowPanel.SetTextCurrencySell("Sell");
+                    rateDisplaySingleDataRowPanel.SetCurrencyImage(null);
                 }
                 else
                 {
                     rateDisplaySingleDataRowPanel.SetIsHeaderRow(false);
-                    rateDisplaySingleDataRowPanel.SetTextCurrencyName("USD");
-                    rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("35.12");
-                    rateDisplaySingleDataRowPanel.SetTextCurrencySell("36.32");
+                    /*String targetKey = currencyKeyArr[i - 1];
+                    ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(targetKey);
+
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);
+                    rateDisplaySingleDataRowPanel.SetTextCurrencyBuy(dataObj.buyText);
+                    rateDisplaySingleDataRowPanel.SetTextCurrencySell(dataObj.sellText);
+                    rateDisplaySingleDataRowPanel.SetCurrencyImage(dataObj.countryFlagImage);*/
 
                     singleDataRowPanelList[i - 1] = rateDisplaySingleDataRowPanel;
                 }
 
-
                 this.Controls.Add(rateDisplaySingleDataRowPanel);
+            }
+        }
+
+        public void FillDataIntoPanel()
+        {
+            for (int i = 0; i < ROW_COUNT_PER_PAGE - 1; i++)
+            {
+                RateDisplaySingleDataRowPanel rateDisplaySingleDataRowPanel = singleDataRowPanelList[i];
+
+                String targetKey = currencyKeyArr[i];
+                ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(targetKey);
+
+                rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);
+                rateDisplaySingleDataRowPanel.SetTextCurrencyBuy(dataObj.buyText);
+                rateDisplaySingleDataRowPanel.SetTextCurrencySell(dataObj.sellText);
+                rateDisplaySingleDataRowPanel.SetCurrencyImage(dataObj.countryFlagImage);
             }
         }
     }
@@ -171,6 +198,11 @@ namespace HME_RateDisplay
                 currencyBuyLabel.ForeColor = Color.LawnGreen;
                 currencySellLabel.ForeColor = Color.Yellow;
             }
+        }
+
+        public void SetCurrencyImage(Bitmap image)
+        {
+            this.countryFlagPictureBox.Image = image;
         }
 
         public void SetTextCurrencyBuy(String text)

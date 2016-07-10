@@ -69,7 +69,7 @@ namespace HME_RateDisplay
         public static Bitmap GetImageFromImageResources(string imageName)
         {
             System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            string path = "HCT_Client.Images." + imageName;
+            string path = "HME_RateDisplay.Images." + imageName;
             Stream myStream = myAssembly.GetManifestResourceStream(path);
             return new Bitmap(myStream);
         }
