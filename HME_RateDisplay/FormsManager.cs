@@ -10,6 +10,7 @@ namespace HME_RateDisplay
         private FormMainMenu instanceFormMainMenu;
         private FormFadeView instanceFormFadeView;
         private FormFadeView instanceFormBaseBackgroundView;
+        private FormRateDisplay instanceFormRateDisplay;
 
         private static FormsManager instance;
 
@@ -36,6 +37,15 @@ namespace HME_RateDisplay
             {
                 instance = new FormsManager();
             }
+        }
+
+        public static FormRateDisplay GetFormRateDisplay()
+        {
+            if (Instance.instanceFormRateDisplay == null)
+            {
+                Instance.instanceFormRateDisplay = new FormRateDisplay();
+            }
+            return Instance.instanceFormRateDisplay;
         }
 
         public static FormFadeView GetFormFadeView()

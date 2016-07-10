@@ -85,8 +85,13 @@ namespace HME_RateDisplay
         }
 
         void ButtonClickedRateDisplay(object sender, EventArgs e)
-        {            
-           
+        {
+            FormRateDisplay instanceFormRateDisplay = FormsManager.GetFormRateDisplay();
+            instanceFormRateDisplay.Visible = true;
+            instanceFormRateDisplay.Enabled = true;
+            instanceFormRateDisplay.RefreshUI();
+            instanceFormRateDisplay.BringToFront();
+            this.Visible = false;
         }
 
         void ButtonClickedSetting(object sender, EventArgs e)
