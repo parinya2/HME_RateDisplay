@@ -100,7 +100,12 @@ namespace HME_RateDisplay
 
         void ButtonClickedSetting(object sender, EventArgs e)
         {
-           
+            FormExchangeRateSetting instanceFormExchangeRateSetting = FormsManager.GetFormExchangeRateSetting();
+            instanceFormExchangeRateSetting.Visible = true;
+            instanceFormExchangeRateSetting.Enabled = true;
+            instanceFormExchangeRateSetting.RefreshUI();
+            instanceFormExchangeRateSetting.BringToFront();
+            this.Visible = false;
         }
 
         void ExitProgram()

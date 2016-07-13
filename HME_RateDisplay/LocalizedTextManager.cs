@@ -21,6 +21,9 @@ namespace HME_RateDisplay
             SetDictValueForKey("ConfirmExitMessageBox.Message", "คุณต้องการออกจากโปรแกรมใช่หรือไม่", "Do you want to exit the program ?");
             SetDictValueForKey("ConfirmExitMessageBox.RightButton", "ตกลง", "OK");
             SetDictValueForKey("ConfirmExitMessageBox.LeftButton", "ย้อนกลับ", "Go Back");
+
+            SetDictValueForKey("SaveCompletedMessageBox.Message", "บันทึกค่าเรียบร้อยแล้ว", "Save completed");
+            SetDictValueForKey("SaveCompletedMessageBox.RightButton", "ตกลง", "OK");
         }
 
         public static LocalizedTextManager Instance
