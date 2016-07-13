@@ -11,6 +11,11 @@ namespace HME_RateDisplay
     {
         private static ExchangeRateDataManager instance;
         private Dictionary<string, ExchangeRateDataObject> exchangeRateDataObjectDict;
+        public static String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
+                                           "EUR1", "EUR2", "EUR3", "GBP1", "GBP2", 
+                                           "AUD", "CNY", "JPY1", "JPY2", "SGD1", "SGD2", 
+                                           "MYR1", "MYR2", "MYR3", "TWD1", "TWD2",
+                                           "KRW1", "KRW2", "HKD" };
 
         public ExchangeRateDataManager()
         {

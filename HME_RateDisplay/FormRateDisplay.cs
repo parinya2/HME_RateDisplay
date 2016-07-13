@@ -21,7 +21,6 @@ namespace HME_RateDisplay
         public FormRateDisplay()
         {
             InitializeComponent();
-            ExchangeRateDataManager.InitInstance();
 
             RenderUI();
 
@@ -63,12 +62,12 @@ namespace HME_RateDisplay
         public void RefreshUI()
         {
             ExchangeRateDataManager.LoadData();
-            rateDisplayContentPanel.FillDataIntoPanel(4,5);
+            rateDisplayContentPanel.FillDataIntoPanel(0,3);
         }
 
         protected void RateDisplaySignalClockHasChanged(int state)
         {
-            int totalCurrencyCount = rateDisplayContentPanel.currencyKeyArr.Length;
+            int totalCurrencyCount = ExchangeRateDataManager.currencyKeyArr.Length;
             int totalContentRowCount = rateDisplayContentPanel.singleDataRowPanelList.Length;
             if (state == 1)
             {
@@ -99,12 +98,7 @@ namespace HME_RateDisplay
 
     public class RateDisplayContentPanel : Panel
     {
-        public RateDisplaySingleDataRowPanel[] singleDataRowPanelList;
-        public String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
-                                           "EUR1", "EUR2", "EUR3", "GBP1", "GBP2", 
-                                           "AUD", "CNY", "JPY1", "JPY2", "SGD1", "SGD2", 
-                                           "MYR1", "MYR2", "MYR3", "TWD1", "TWD2",
-                                           "KRW1", "KRW2", "HKD" };
+        public RateDisplaySingleDataRowPanel[] singleDataRowPanelList;        
         int ROW_COUNT_PER_PAGE = -1;
 
         public RateDisplayContentPanel(int width, int height)
@@ -152,7 +146,7 @@ namespace HME_RateDisplay
                 int targetKeyIndex = startIndex + i;
                 if (targetKeyIndex <= stopIndex)
                 {
-                    String targetKey = currencyKeyArr[targetKeyIndex];
+                    String targetKey = ExchangeRateDataManager.currencyKeyArr[targetKeyIndex];
                     ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(targetKey);
 
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);

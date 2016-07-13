@@ -22,6 +22,7 @@ namespace HME_RateDisplay
         {
             InitializeComponent();
             LocalizedTextManager.InitInstance();
+            ExchangeRateDataManager.InitInstance();
             FormsManager.InitInstance();
             FormsManager.SetFormMainMenu(this);
 
@@ -69,6 +70,7 @@ namespace HME_RateDisplay
             exitButton.Click += new EventHandler(ExitButtonClicked);
 
             headerPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH , 260);
+            headerPanel.Location = new Point(0 , 0);
 
             this.Controls.Add(headerPanel);
             this.Controls.Add(exitButton);
