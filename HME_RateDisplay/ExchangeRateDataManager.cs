@@ -73,18 +73,21 @@ namespace HME_RateDisplay
             {
                 String text = resultRowArr[i].Trim();
                 String[] tmpArr = text.Split(separatorLv2);
-                if (tmpArr.Length == 3)
+                if (tmpArr.Length == 5)
                 {
                     String currencyKey = tmpArr[0];
-                    String buyRate = tmpArr[1];
-                    String sellRate = tmpArr[2];
+                    bool shouldDisplayFlag = tmpArr[1].Equals("T");
+                    String currencyText = tmpArr[2];
+                    String buyRate = tmpArr[3];
+                    String sellRate = tmpArr[4];
 
                     ExchangeRateDataObject obj = new ExchangeRateDataObject();
                     obj.currencyKey = currencyKey;
-                    obj.currencyText = currencyKey;
+                    obj.currencyText = currencyText;
+                    obj.shoudlDisplayFlag = shouldDisplayFlag;
                     obj.buyText = buyRate;
                     obj.sellText = sellRate;
-                    String imageName = "Flag" + currencyKey + ".jpg";
+                    String imageName = "Flag" + currencyKey.Substring(0,3) + ".jpg";
                     obj.countryFlagImage = Util.GetImageFromImageResources(imageName);
 
                     SetExchangeRateObject(currencyKey, obj);
@@ -100,5 +103,6 @@ namespace HME_RateDisplay
         public String currencyKey;
         public String buyText;
         public String sellText;
+        public bool shoudlDisplayFlag;
     }
 }

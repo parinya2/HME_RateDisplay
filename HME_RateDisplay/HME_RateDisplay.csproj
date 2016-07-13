@@ -59,6 +59,12 @@
     <Compile Include="FixedSizeFormWithHeader.Designer.cs">
       <DependentUpon>FixedSizeFormWithHeader.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormExchangeRateSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormExchangeRateSetting.Designer.cs">
+      <DependentUpon>FormExchangeRateSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFadeView.cs">
       <SubType>Form</SubType>
     </Compile>

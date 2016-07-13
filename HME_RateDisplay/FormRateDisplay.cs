@@ -100,7 +100,11 @@ namespace HME_RateDisplay
     public class RateDisplayContentPanel : Panel
     {
         public RateDisplaySingleDataRowPanel[] singleDataRowPanelList;
-        public String[] currencyKeyArr = { "USD", "GBP", "EUR", "AUD", "CNY", "HKD", "SGD", "JPY", "MYR", "TWD", "KRW" };
+        public String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
+                                           "EUR1", "EUR2", "EUR3", "GBP1", "GBP2", 
+                                           "AUD", "CNY", "JPY1", "JPY2", "SGD1", "SGD2", 
+                                           "MYR1", "MYR2", "MYR3", "TWD1", "TWD2",
+                                           "KRW1", "KRW2", "HKD" };
         int ROW_COUNT_PER_PAGE = -1;
 
         public RateDisplayContentPanel(int width, int height)
@@ -154,7 +158,7 @@ namespace HME_RateDisplay
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);
                     rateDisplaySingleDataRowPanel.SetTextCurrencyBuy(dataObj.buyText);
                     rateDisplaySingleDataRowPanel.SetTextCurrencySell(dataObj.sellText);
-                    rateDisplaySingleDataRowPanel.SetCurrencyImage(dataObj.countryFlagImage);
+                    rateDisplaySingleDataRowPanel.SetCurrencyImage(dataObj.shoudlDisplayFlag ? dataObj.countryFlagImage : null);
                 }
                 else
                 {
