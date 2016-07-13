@@ -169,7 +169,7 @@ namespace HME_RateDisplay
             this.Width = width;
             this.Height = height;
 
-            int gapY = 0;
+            int gapY = 5;
             int gapX = 7;
             int rateSettingSingleDataRowWidth = 550;
             int rateSettingSingleDataRowHeight = 30;
@@ -189,7 +189,7 @@ namespace HME_RateDisplay
                 if (columnNo == 1) locationX = this.Width / 2 + 30;
 
                 rateSettingSingleDataRowPanel.Location = new Point(locationX, 
-                                                                   gapY + (rateSettingSingleDataRowPanel.Height + gapY) * rowNo);
+                                                                   gapY + rateSettingSingleDataRowPanel.Height * rowNo);
 
                 String targetKey = ExchangeRateDataManager.currencyKeyArr[i];
                 rateSettingSingleDataRowPanel.currencyKey = targetKey;
