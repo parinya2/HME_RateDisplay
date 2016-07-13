@@ -15,8 +15,12 @@ namespace HME_RateDisplay
         Button saveButton;
         FormFadeView fadeForm;
         FormLargeMessageBox saveCompletedMessageBox;
+        FormLargeMessageBox saveErrorMessageBox;
         RateDisplayHeaderPanel rateSettingHeaderPanel;
         RateSettingContentPanel rateSettingContentPanel;
+
+        String SAVE_SUCCESS = "SAVE_SUCCESS";
+        String SAVE_ERROR_INVALID_CHAR = "SAVE_ERROR_INVALID_CHAR";
 
         public FormExchangeRateSetting()
         {
@@ -30,9 +34,13 @@ namespace HME_RateDisplay
             saveCompletedMessageBox.Visible = false;
             saveCompletedMessageBox.rightButton.Click += new EventHandler(SaveCompletedMessageBoxRightButtonClicked);
 
-            fadeForm = FormsManager.GetFormFadeView();
+            saveErrorMessageBox = new FormLargeMessageBox(0);
+            saveErrorMessageBox.messageLabel.Text = LocalizedTextManager.GetLocalizedTextForKey("SaveErrorMessageBox.InvalidChar.Message");
+            saveErrorMessageBox.rightButton.Text = LocalizedTextManager.GetLocalizedTextForKey("SaveErrorMessageBox.RightButton");
+            saveErrorMessageBox.Visible = false;
+            saveErrorMessageBox.rightButton.Click += new EventHandler(SaveErrorMessageBoxRightButtonClicked);
 
-            
+            fadeForm = FormsManager.GetFormFadeView();       
         }
 
         public void RenderUI()
@@ -83,18 +91,61 @@ namespace HME_RateDisplay
             this.BringToFront();
         }
 
+        void SaveErrorMessageBoxRightButtonClicked(object sender, EventArgs e)
+        {
+            saveErrorMessageBox.Visible = false;
+            fadeForm.Visible = false;
+            this.Visible = true;
+            this.Enabled = true;
+            this.BringToFront();
+        }
+
         void SaveButtonClicked(object sender, EventArgs e)
         {
-            // DO SOMETHING
+            String result = SaveExchangeRate();
 
             fadeForm.Visible = true;
             fadeForm.BringToFront();
 
-            saveCompletedMessageBox.Visible = true;
-            saveCompletedMessageBox.BringToFront();
-            saveCompletedMessageBox.Location = new Point((SCREEN_WIDTH - saveCompletedMessageBox.Width) / 2,
-                                                        (SCREEN_HEIGHT - saveCompletedMessageBox.Height) / 2);
+            if (result.Equals(SAVE_SUCCESS))
+            {
+                saveCompletedMessageBox.Visible = true;
+                saveCompletedMessageBox.BringToFront();
+                saveCompletedMessageBox.Location = new Point((SCREEN_WIDTH - saveCompletedMessageBox.Width) / 2,
+                                                            (SCREEN_HEIGHT - saveCompletedMessageBox.Height) / 2);
    
+            }
+            else if (result.Equals(SAVE_ERROR_INVALID_CHAR))
+            {
+                saveErrorMessageBox.Visible = true;
+                saveErrorMessageBox.BringToFront();
+                saveErrorMessageBox.Location = new Point((SCREEN_WIDTH - saveErrorMessageBox.Width) / 2,
+                                                         (SCREEN_HEIGHT - saveErrorMessageBox.Height) / 2);
+            
+            }
+
+        }
+        
+        String SaveExchangeRate()
+        {
+            StringBuilder sb = new StringBuilder("");
+            RateSettingSingleDataRowPanel[] singleDataRowPanelList = rateSettingContentPanel.singleDataRowPanelList;
+            for (int i = 0; i < singleDataRowPanelList.Length; i++)
+            { 
+                RateSettingSingleDataRowPanel panelObj = singleDataRowPanelList[i];
+                if (!panelObj.IsDataFormatCorrect())
+                {
+                    return SAVE_ERROR_INVALID_CHAR;
+                }
+                String tmpLine = panelObj.currencyKey + "," + (panelObj.shouldDisplayFlag ? "T" : "F") + "," +
+                                 panelObj.currencyNameLabel.Text + "," + panelObj.currencyBuyTextBox.Text + "," +
+                                 panelObj.currencySellTextBox.Text;
+                if (i < singleDataRowPanelList.Length - 1) tmpLine += "#";
+                sb.AppendLine(tmpLine);
+            }
+
+            ExchangeRateDataManager.SaveData(sb.ToString());
+            return SAVE_SUCCESS;            
         }
 
         void GoBackButtonClicked(object sender, EventArgs e)
@@ -160,6 +211,7 @@ namespace HME_RateDisplay
                 panelObj.currencyNameLabel.Text = dataObj.currencyText;
                 panelObj.currencyBuyTextBox.Text = dataObj.buyText;
                 panelObj.currencySellTextBox.Text = dataObj.sellText;
+                panelObj.shouldDisplayFlag = dataObj.shoudlDisplayFlag;
             }
         }
     }
@@ -254,6 +306,31 @@ namespace HME_RateDisplay
             this.Controls.Add(currencySellLabel);
             this.Controls.Add(currencyBuyTextBox);
             this.Controls.Add(currencySellTextBox);
+        }
+
+        public bool IsDataFormatCorrect()
+        {
+            String buyString = currencyBuyTextBox.Text.Trim();
+            String sellString = currencySellTextBox.Text.Trim();
+            double d1, d2;
+
+            bool isBuyStringValid = true;
+            if (buyString.Contains("#") || buyString.Contains(","))
+                isBuyStringValid = false;
+            else if (buyString == null || buyString.Equals("") || buyString.Equals("-"))
+                isBuyStringValid = true;
+            else          
+                isBuyStringValid = Double.TryParse(buyString, out d1);
+            
+            bool isSellStringValid = true;
+            if (sellString.Contains("#") || sellString.Contains(","))
+                isSellStringValid = false;
+            else if (sellString == null || sellString.Equals("") || sellString.Equals("-"))
+                isSellStringValid = true;
+            else          
+                isSellStringValid = Double.TryParse(sellString, out d2);
+            
+            return isBuyStringValid && isSellStringValid;
         }
     }
 }

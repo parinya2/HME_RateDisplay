@@ -24,6 +24,9 @@ namespace HME_RateDisplay
 
             SetDictValueForKey("SaveCompletedMessageBox.Message", "บันทึกค่าเรียบร้อยแล้ว", "Save completed");
             SetDictValueForKey("SaveCompletedMessageBox.RightButton", "ตกลง", "OK");
+
+            SetDictValueForKey("SaveErrorMessageBox.InvalidChar.Message", "ห้ามกรอกสัญลักษณ์หรือตัวหนังสืออื่นๆที่ไม่ใช่ตัวเลขจำนวนเงิน", "Do not use , or # symbols");
+            SetDictValueForKey("SaveErrorMessageBox.RightButton", "ตกลง", "OK");
         }
 
         public static LocalizedTextManager Instance

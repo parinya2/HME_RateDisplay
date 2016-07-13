@@ -56,6 +56,11 @@ namespace HME_RateDisplay
             instance.exchangeRateDataObjectDict.Add(key, obj);
         }
 
+        public static void SaveData(String data)
+        {
+            File.WriteAllText(Util.GetTokenPath(), data);
+        }
+
         public static void LoadData()
         {
             string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);
