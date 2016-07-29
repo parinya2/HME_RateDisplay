@@ -61,6 +61,23 @@ namespace HME_RateDisplay
             File.WriteAllText(Util.GetTokenPath(), data);
         }
 
+        public static void CreateDailyReport()
+        {
+            LoadData();
+
+            StringBuilder sb = new StringBuilder("");
+            foreach (string key in currencyKeyArr)
+            {
+                ExchangeRateDataObject dataObj = GetExchangeRateObjectForKey(key);
+                string tabString = dataObj.currencyText.Length > 15 ? "\t" : "\t\t";              
+                string tmp = dataObj.currencyText + tabString + "Buy = " + dataObj.buyText + "\tSell = " + dataObj.sellText;
+                sb.Append(tmp);
+                sb.Append(Environment.NewLine);
+            }
+
+            File.WriteAllText(Util.GetDailyReportPath(), sb.ToString());
+        }
+
         public static void LoadData()
         {
             string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);

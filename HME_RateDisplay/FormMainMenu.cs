@@ -13,9 +13,11 @@ namespace HME_RateDisplay
     {
         LargeButton rateDisplayButton;
         LargeButton settingButton;
+        LargeButton reportButton;
         Button exitButton;
         FormFadeView fadeForm;
         FormLargeMessageBox confirmExitMessageBox;
+        FormLargeMessageBox reportCompletedMessageBox;
         RateDisplayHeaderPanel headerPanel;
 
         public FormMainMenu()
@@ -35,6 +37,13 @@ namespace HME_RateDisplay
             confirmExitMessageBox.Visible = false;
             confirmExitMessageBox.rightButton.Click += new EventHandler(ConfirmExitMessageBoxRightButtonClicked);
             confirmExitMessageBox.leftButton.Click += new EventHandler(ConfirmExitMessageBoxLeftButtonClicked);
+
+            reportCompletedMessageBox = new FormLargeMessageBox(0);
+            reportCompletedMessageBox.messageLabel.Text = LocalizedTextManager.GetLocalizedTextForKey("ReportCompletedMessageBox.Message");
+            reportCompletedMessageBox.rightButton.Text = LocalizedTextManager.GetLocalizedTextForKey("ReportCompletedMessageBox.RightButton");
+            reportCompletedMessageBox.Visible = false;
+            reportCompletedMessageBox.rightButton.Click += new EventHandler(ReportCompletedMessageBoxRightButtonClicked);
+
 
             fadeForm = FormsManager.GetFormFadeView();
 
@@ -60,6 +69,12 @@ namespace HME_RateDisplay
             settingButton.Text = "ตั้งค่า";
             settingButton.Click += new EventHandler(ButtonClickedSetting);
 
+            reportButton = new LargeButton();
+            reportButton.Location = new Point((SCREEN_WIDTH / 2 - reportButton.Width / 2),
+                                             rateDisplayButton.Location.Y + rateDisplayButton.Size.Height + 40);
+            reportButton.Text = "สร้าง Report";
+            reportButton.Click += new EventHandler(ButtonClickedReport);
+
             exitButton = new Button();
             exitButton.Width = 200;
             exitButton.Height = 90;
@@ -76,6 +91,7 @@ namespace HME_RateDisplay
             this.Controls.Add(exitButton);
             this.Controls.Add(rateDisplayButton);
             this.Controls.Add(settingButton);
+            this.Controls.Add(reportButton);
         }
 
 
@@ -110,6 +126,20 @@ namespace HME_RateDisplay
             this.Visible = false;
         }
 
+        void ButtonClickedReport(object sender, EventArgs e)
+        {
+            ExchangeRateDataManager.CreateDailyReport();
+
+            fadeForm.Visible = true;
+            fadeForm.BringToFront();
+
+            reportCompletedMessageBox.Visible = true;
+            reportCompletedMessageBox.BringToFront();
+            reportCompletedMessageBox.Location = new Point((SCREEN_WIDTH - confirmExitMessageBox.Width) / 2,
+                                                    (SCREEN_HEIGHT - confirmExitMessageBox.Height) / 2);
+   
+        }
+
         void ExitProgram()
         {
             if (System.Windows.Forms.Application.MessageLoop)
@@ -132,6 +162,15 @@ namespace HME_RateDisplay
         void ConfirmExitMessageBoxLeftButtonClicked(object sender, EventArgs e)
         {
             confirmExitMessageBox.Visible = false;
+            fadeForm.Visible = false;
+            this.Visible = true;
+            this.Enabled = true;
+            this.BringToFront();
+        }
+
+        void ReportCompletedMessageBoxRightButtonClicked(object sender, EventArgs e)
+        {
+            reportCompletedMessageBox.Visible = false;
             fadeForm.Visible = false;
             this.Visible = true;
             this.Enabled = true;

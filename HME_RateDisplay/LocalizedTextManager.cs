@@ -22,6 +22,9 @@ namespace HME_RateDisplay
             SetDictValueForKey("ConfirmExitMessageBox.RightButton", "ตกลง", "OK");
             SetDictValueForKey("ConfirmExitMessageBox.LeftButton", "ย้อนกลับ", "Go Back");
 
+            SetDictValueForKey("ReportCompletedMessageBox.Message", "สร้าง Report เรียบร้อยแล้ว", "Report completed");
+            SetDictValueForKey("ReportCompletedMessageBox.RightButton", "ตกลง", "OK");
+
             SetDictValueForKey("SaveCompletedMessageBox.Message", "บันทึกค่าเรียบร้อยแล้ว", "Save completed");
             SetDictValueForKey("SaveCompletedMessageBox.RightButton", "ตกลง", "OK");
 

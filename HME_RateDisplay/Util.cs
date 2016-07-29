@@ -22,6 +22,12 @@ namespace HME_RateDisplay
             return GetExecutingPath() + "/Private/token";
         }
 
+        public static string GetDailyReportPath()
+        {
+            string dateString = DateTime.Now.ToString("dd-MM-yyyy");
+            return GetExecutingPath() + "/Reports/รายงานวันที่ " + dateString +".txt";
+        }
+
         static string ExtractEmailPassword()
         {
             string text = "" + File.ReadAllText(GetTokenPath(), Encoding.UTF8);
