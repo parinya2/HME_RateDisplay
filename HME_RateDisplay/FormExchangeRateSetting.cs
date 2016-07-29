@@ -173,8 +173,8 @@ namespace HME_RateDisplay
         public RateSettingContentPanel(int width, int height)
         {
             int rateSettingSingleDataRowWidth = 550;
-            int rateSettingSingleDataRowHeight = 30;
-            int requiredHeight = (ExchangeRateDataManager.currencyKeyArr.Count / 2) * rateSettingSingleDataRowHeight;
+            int rateSettingSingleDataRowHeight = 35;
+            int requiredHeight = ((ExchangeRateDataManager.currencyKeyArr.Count / 2) + 1) * rateSettingSingleDataRowHeight;
 
             this.AutoScroll = true;
             this.Width = width;
@@ -185,7 +185,7 @@ namespace HME_RateDisplay
 
 
             singleDataRowPanelList = new RateSettingSingleDataRowPanel[ExchangeRateDataManager.currencyKeyArr.Count];
-            ROW_COUNT_PER_COLUMN = (ExchangeRateDataManager.currencyKeyArr.Count / 2);
+            ROW_COUNT_PER_COLUMN = (ExchangeRateDataManager.currencyKeyArr.Count / 2) + 1;
 
             for (int i = 0; i < singleDataRowPanelList.Length; i++)
             {

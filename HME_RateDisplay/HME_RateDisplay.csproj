@@ -141,6 +141,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\FlagCAD.jpg" />
+    <EmbeddedResource Include="Images\FlagCHF.jpg" />
+    <EmbeddedResource Include="Images\FlagDKK.jpg" />
+    <EmbeddedResource Include="Images\FlagIDR.jpg" />
+    <EmbeddedResource Include="Images\FlagINR.jpg" />
+    <EmbeddedResource Include="Images\FlagNOK.jpg" />
+    <EmbeddedResource Include="Images\FlagNZD.jpg" />
+    <EmbeddedResource Include="Images\FlagPHP.jpg" />
+    <EmbeddedResource Include="Images\FlagSEK.jpg" />
+    <EmbeddedResource Include="Images\FlagVAM.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
