@@ -70,15 +70,21 @@ namespace HME_RateDisplay
             rateSettingContentPanel = new RateSettingContentPanel(SCREEN_WIDTH, goBackButton.Location.Y - 50 - rateSettingHeaderPanel.Height);
             rateSettingContentPanel.Location = new Point(0, rateSettingHeaderPanel.Height);
 
+            Label horizontalLine = new Label();
+            horizontalLine.Width = SCREEN_WIDTH;
+            horizontalLine.Height = 5;
+            horizontalLine.BackColor = rateSettingHeaderPanel.BackColor;
+            horizontalLine.Location = new Point(0, rateSettingContentPanel.Location.Y + rateSettingContentPanel.Height + 20);
+
             this.Controls.Add(rateSettingHeaderPanel);
             this.Controls.Add(rateSettingContentPanel);
             this.Controls.Add(goBackButton);
             this.Controls.Add(saveButton);
+            this.Controls.Add(horizontalLine);
         }
 
         public void RefreshUI()
-        {
-            ExchangeRateDataManager.LoadData();
+        {            
             rateSettingContentPanel.FillDataIntoPanel();
         }
 
@@ -166,16 +172,20 @@ namespace HME_RateDisplay
 
         public RateSettingContentPanel(int width, int height)
         {
-            this.Width = width;
-            this.Height = height;
-
-            int gapY = 5;
-            int gapX = 7;
             int rateSettingSingleDataRowWidth = 550;
             int rateSettingSingleDataRowHeight = 30;
+            int requiredHeight = (ExchangeRateDataManager.currencyKeyArr.Count / 2) * rateSettingSingleDataRowHeight;
+
+            this.AutoScroll = true;
+            this.Width = width;
+            this.Height = height;
+            this.SetAutoScrollMargin(0, requiredHeight - this.Height - 20);
+            int gapY = 5;
+            int gapX = 7;
+
 
             singleDataRowPanelList = new RateSettingSingleDataRowPanel[ExchangeRateDataManager.currencyKeyArr.Count];
-            ROW_COUNT_PER_COLUMN = this.Height / rateSettingSingleDataRowHeight;
+            ROW_COUNT_PER_COLUMN = (ExchangeRateDataManager.currencyKeyArr.Count / 2);
 
             for (int i = 0; i < singleDataRowPanelList.Length; i++)
             {
