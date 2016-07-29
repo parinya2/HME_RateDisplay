@@ -67,7 +67,7 @@ namespace HME_RateDisplay
 
         protected void RateDisplaySignalClockHasChanged(int state)
         {
-            int totalCurrencyCount = ExchangeRateDataManager.currencyKeyArr.Length;
+            int totalCurrencyCount = ExchangeRateDataManager.currencyKeyArr.Count;
             int totalContentRowCount = rateDisplayContentPanel.singleDataRowPanelList.Length;
             if (state == 1)
             {
@@ -146,7 +146,7 @@ namespace HME_RateDisplay
                 int targetKeyIndex = startIndex + i;
                 if (targetKeyIndex <= stopIndex)
                 {
-                    String targetKey = ExchangeRateDataManager.currencyKeyArr[targetKeyIndex];
+                    String targetKey = (String)(ExchangeRateDataManager.currencyKeyArr[targetKeyIndex]);
                     ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(targetKey);
 
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);

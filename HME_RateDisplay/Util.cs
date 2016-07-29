@@ -76,7 +76,14 @@ namespace HME_RateDisplay
         {
             System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
             string path = "HME_RateDisplay.Images." + imageName;
+            string pathNull = "HME_RateDisplay.Images.FlagNull.jpg";
             Stream myStream = myAssembly.GetManifestResourceStream(path);
+
+            if (myStream == null)
+            {
+                myStream = myAssembly.GetManifestResourceStream(pathNull);
+            }
+        
             return new Bitmap(myStream);
         }
 

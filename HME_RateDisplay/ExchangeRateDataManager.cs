@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Collections;
 
 namespace HME_RateDisplay
 {
@@ -11,11 +12,12 @@ namespace HME_RateDisplay
     {
         private static ExchangeRateDataManager instance;
         private Dictionary<string, ExchangeRateDataObject> exchangeRateDataObjectDict;
-        public static String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
+        /*public static String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
                                            "EUR1", "EUR2", "EUR3", "GBP1", "GBP2", 
                                            "AUD", "CNY", "JPY1", "JPY2", "SGD1", "SGD2", 
                                            "MYR1", "MYR2", "MYR3", "TWD1", "TWD2",
-                                           "KRW1", "KRW2", "HKD" };
+                                           "KRW1", "KRW2", "HKD" };*/
+        public static ArrayList currencyKeyArr;
 
         public ExchangeRateDataManager()
         {
@@ -80,6 +82,7 @@ namespace HME_RateDisplay
 
         public static void LoadData()
         {
+            currencyKeyArr = new ArrayList();
             string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);
             allText = allText.Trim();
             char separatorLv1 = '#';
@@ -107,6 +110,8 @@ namespace HME_RateDisplay
                     String currencyText = tmpArr[2];
                     String buyRate = tmpArr[3];
                     String sellRate = tmpArr[4];
+
+                    currencyKeyArr.Add(currencyKey);
 
                     ExchangeRateDataObject obj = new ExchangeRateDataObject();
                     obj.currencyKey = currencyKey;
