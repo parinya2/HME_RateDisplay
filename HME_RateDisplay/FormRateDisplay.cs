@@ -22,10 +22,15 @@ namespace HME_RateDisplay
         {
             InitializeComponent();
 
-            RenderUI();
+            this.Load += new EventHandler(OnFormLoaded);
 
             rateDisplaySignalClock = new SignalClock(200);
             rateDisplaySignalClock.TheTimeChanged += new SignalClock.SignalClockTickHandler(RateDisplaySignalClockHasChanged);
+        }
+
+        private void OnFormLoaded(object sender, System.EventArgs e)
+        {
+            RenderUI();
         }
 
         public void RenderUI()

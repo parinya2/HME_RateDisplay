@@ -20,9 +20,6 @@ namespace HME_RateDisplay
         {
             InitializeComponent();
 
-            int SCREEN_WIDTH = SystemInformation.VirtualScreen.Width;
-            int SCREEN_HEIGHT = SystemInformation.VirtualScreen.Height;
-
             this.mode = mode;
             this.Width = 600;
             this.Height = 300;

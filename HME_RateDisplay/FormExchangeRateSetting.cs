@@ -26,7 +26,7 @@ namespace HME_RateDisplay
         {
             InitializeComponent();
 
-            RenderUI();
+            this.Load += new EventHandler(OnFormLoaded);
 
             saveCompletedMessageBox = new FormLargeMessageBox(0);
             saveCompletedMessageBox.messageLabel.Text = LocalizedTextManager.GetLocalizedTextForKey("SaveCompletedMessageBox.Message");
@@ -41,6 +41,11 @@ namespace HME_RateDisplay
             saveErrorMessageBox.rightButton.Click += new EventHandler(SaveErrorMessageBoxRightButtonClicked);
 
             fadeForm = FormsManager.GetFormFadeView();       
+        }
+
+        private void OnFormLoaded(object sender, System.EventArgs e)
+        {
+            RenderUI();
         }
 
         public void RenderUI()
@@ -117,7 +122,7 @@ namespace HME_RateDisplay
             {
                 saveCompletedMessageBox.Visible = true;
                 saveCompletedMessageBox.BringToFront();
-                saveCompletedMessageBox.Location = new Point((SCREEN_WIDTH - saveCompletedMessageBox.Width) / 2,
+                saveCompletedMessageBox.Location = new Point(SCREEN_OFFSET_X + (SCREEN_WIDTH - saveCompletedMessageBox.Width) / 2,
                                                             (SCREEN_HEIGHT - saveCompletedMessageBox.Height) / 2);
    
             }
@@ -125,7 +130,7 @@ namespace HME_RateDisplay
             {
                 saveErrorMessageBox.Visible = true;
                 saveErrorMessageBox.BringToFront();
-                saveErrorMessageBox.Location = new Point((SCREEN_WIDTH - saveErrorMessageBox.Width) / 2,
+                saveErrorMessageBox.Location = new Point(SCREEN_OFFSET_X + (SCREEN_WIDTH - saveErrorMessageBox.Width) / 2,
                                                          (SCREEN_HEIGHT - saveErrorMessageBox.Height) / 2);
             
             }

@@ -27,8 +27,9 @@ namespace HME_RateDisplay
             ExchangeRateDataManager.InitInstance();
             FormsManager.InitInstance();
             FormsManager.SetFormMainMenu(this);
+            this.Load += new EventHandler(OnFormLoaded);
 
-            RenderUI();
+          //  RenderUI();
 
             confirmExitMessageBox = new FormLargeMessageBox(1);
             confirmExitMessageBox.messageLabel.Text = LocalizedTextManager.GetLocalizedTextForKey("ConfirmExitMessageBox.Message");
@@ -50,6 +51,11 @@ namespace HME_RateDisplay
             FormFadeView baseBG = FormsManager.GetFormBaseBackgroundView();
             baseBG.Visible = true;
             this.BringToFront();
+        }
+
+        private void OnFormLoaded(object sender, System.EventArgs e)
+        {
+            RenderUI();
         }
 
         public void RenderUI()
@@ -102,7 +108,7 @@ namespace HME_RateDisplay
 
             confirmExitMessageBox.Visible = true;
             confirmExitMessageBox.BringToFront();
-            confirmExitMessageBox.Location = new Point((SCREEN_WIDTH - confirmExitMessageBox.Width) / 2,
+            confirmExitMessageBox.Location = new Point(SCREEN_OFFSET_X + (SCREEN_WIDTH - confirmExitMessageBox.Width) / 2,
                                                     (SCREEN_HEIGHT - confirmExitMessageBox.Height) / 2);
         }
 
@@ -136,7 +142,7 @@ namespace HME_RateDisplay
 
             reportCompletedMessageBox.Visible = true;
             reportCompletedMessageBox.BringToFront();
-            reportCompletedMessageBox.Location = new Point((SCREEN_WIDTH - confirmExitMessageBox.Width) / 2,
+            reportCompletedMessageBox.Location = new Point(SCREEN_OFFSET_X + (SCREEN_WIDTH - confirmExitMessageBox.Width) / 2,
                                                     (SCREEN_HEIGHT - confirmExitMessageBox.Height) / 2);
    
         }
