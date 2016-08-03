@@ -38,8 +38,8 @@ namespace HME_RateDisplay
             headerTextLabel.Width = SCREEN_WIDTH - dltLogoPictureBox.Width - dltLogoPictureBox.Location.X - headerLineGap * 3;
             headerTextLabel.Height = dltLogoPictureBox.Height;
             headerTextLabel.TextAlign = ContentAlignment.MiddleLeft;
-            headerTextLabel.Font = new Font(this.Font.FontFamily, 22);
-            headerTextLabel.Text = "Hatyai Money Exchange";
+            headerTextLabel.Font = new Font(this.Font.FontFamily, 14);
+            headerTextLabel.Text = "HATYAI EXCHANGE Co., Ltd";
             headerTextLabel.Location = new Point(dltLogoPictureBox.Location.X + dltLogoPictureBox.Width + headerLineGap,
                                                  dltLogoPictureBox.Location.Y);
 

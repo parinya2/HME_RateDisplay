@@ -22,6 +22,11 @@ namespace HME_RateDisplay
             return GetExecutingPath() + "/Private/token";
         }
 
+        public static string GetToken2Path()
+        {
+            return GetExecutingPath() + "/Private/token2";
+        }
+
         public static string GetDailyReportPath()
         {
             string dateString = DateTime.Now.ToString("dd-MM-yyyy");

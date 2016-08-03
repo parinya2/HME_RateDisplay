@@ -67,7 +67,8 @@ namespace HME_RateDisplay
         public void RefreshUI()
         {
             ExchangeRateDataManager.LoadData();
-            rateDisplayContentPanel.FillDataIntoPanel(0,3);
+            rateDisplayContentPanel.FillDataIntoPanel(0, 3);
+            rateDisplayHeaderPanel.RefreshHeadertext();
         }
 
         protected void RateDisplaySignalClockHasChanged(int state)
@@ -291,22 +292,33 @@ namespace HME_RateDisplay
 
     public class RateDisplayHeaderPanel : Panel
     {
+        Label headerTextLabel;
         public RateDisplayHeaderPanel(int width, int height)
         {
             this.Width = width;
             this.Height = height;
             this.BackColor = Color.DarkBlue;
 
-            Label headerTextLabel = new Label();
+            headerTextLabel = new Label();
             headerTextLabel.ForeColor = Color.White;
             headerTextLabel.Width = (int)(width * 0.85);
-            headerTextLabel.Height = 100;
+            headerTextLabel.Height = 200;
             headerTextLabel.TextAlign = ContentAlignment.MiddleCenter;
-            headerTextLabel.Font = new Font(this.Font.FontFamily, 50);
-            headerTextLabel.Text = "Hatyai  Money  Exchange";
+            headerTextLabel.Font = new Font(this.Font.FontFamily, 25);
             headerTextLabel.Location = new Point((this.Width - headerTextLabel.Width) / 2 , (this.Height - headerTextLabel.Height) / 2);
+            RefreshHeadertext();
 
             this.Controls.Add(headerTextLabel);
+        }
+
+        public void RefreshHeadertext()
+        {
+            DateTime date = DateTime.Now;
+            string dateString = date.ToString("dd / MM / yyyy");
+            headerTextLabel.Text = "HATYAI  EXCHANGE Co., Ltd." + Environment.NewLine +
+                            "CURRENCY EXCHANGE RATE" + Environment.NewLine +
+                            "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();
+      
         }
     }
 }

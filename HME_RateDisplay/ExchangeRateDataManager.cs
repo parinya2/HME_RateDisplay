@@ -12,12 +12,9 @@ namespace HME_RateDisplay
     {
         private static ExchangeRateDataManager instance;
         private Dictionary<string, ExchangeRateDataObject> exchangeRateDataObjectDict;
-        /*public static String[] currencyKeyArr = { "USD1", "USD2", "USD3", "USD4", "USD5", 
-                                           "EUR1", "EUR2", "EUR3", "GBP1", "GBP2", 
-                                           "AUD", "CNY", "JPY1", "JPY2", "SGD1", "SGD2", 
-                                           "MYR1", "MYR2", "MYR3", "TWD1", "TWD2",
-                                           "KRW1", "KRW2", "HKD" };*/
         public static ArrayList currencyKeyArr;
+        private string updatedTimeString;
+        private string updatedDateString;
 
         public ExchangeRateDataManager()
         {
@@ -58,9 +55,33 @@ namespace HME_RateDisplay
             instance.exchangeRateDataObjectDict.Add(key, obj);
         }
 
+        public static string GetUpdatedDateString()
+        {
+            return instance.updatedDateString;
+        }
+
+        public static void SetUpdatedDateString(string text)
+        {
+            instance.updatedDateString = text;
+        }
+
+        public static string GetUpdatedTimeString()
+        {
+            return instance.updatedTimeString;
+        }
+
+        public static void SetUpdatedTimeString(string text)
+        {
+            instance.updatedTimeString = text;
+        }
+
         public static void SaveData(String data)
         {
             File.WriteAllText(Util.GetTokenPath(), data);
+
+            DateTime date = DateTime.Now;
+            string fullDateStr = date.ToString("dd/MM/yyyy HH:mm:ss");
+            File.WriteAllText(Util.GetToken2Path(), fullDateStr);
         }
 
         public static void CreateDailyReport()
@@ -82,6 +103,14 @@ namespace HME_RateDisplay
 
         public static void LoadData()
         {
+            string dateTimeText = "" + File.ReadAllText(Util.GetToken2Path(), Encoding.UTF8);
+            string[] dateTimeArr = dateTimeText.Split(' ');
+            if (dateTimeArr.Length == 2)
+            {
+                SetUpdatedDateString(dateTimeArr[0]);
+                SetUpdatedTimeString(dateTimeArr[1]);
+            }
+
             currencyKeyArr = new ArrayList();
             string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);
             allText = allText.Trim();

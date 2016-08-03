@@ -27,9 +27,8 @@ namespace HME_RateDisplay
             ExchangeRateDataManager.InitInstance();
             FormsManager.InitInstance();
             FormsManager.SetFormMainMenu(this);
-            this.Load += new EventHandler(OnFormLoaded);
-
-          //  RenderUI();
+            ExchangeRateDataManager.LoadData();
+            this.Load += new EventHandler(OnFormLoaded);           
 
             confirmExitMessageBox = new FormLargeMessageBox(1);
             confirmExitMessageBox.messageLabel.Text = LocalizedTextManager.GetLocalizedTextForKey("ConfirmExitMessageBox.Message");
@@ -56,6 +55,11 @@ namespace HME_RateDisplay
         private void OnFormLoaded(object sender, System.EventArgs e)
         {
             RenderUI();
+        }
+
+        public void RefreshUI()
+        {
+            headerPanel.RefreshHeadertext();
         }
 
         public void RenderUI()
@@ -124,7 +128,6 @@ namespace HME_RateDisplay
 
         void ButtonClickedSetting(object sender, EventArgs e)
         {
-            ExchangeRateDataManager.LoadData();
             FormExchangeRateSetting instanceFormExchangeRateSetting = FormsManager.GetFormExchangeRateSetting();
             instanceFormExchangeRateSetting.Visible = true;
             instanceFormExchangeRateSetting.Enabled = true;

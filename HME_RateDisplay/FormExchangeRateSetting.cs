@@ -89,12 +89,15 @@ namespace HME_RateDisplay
         }
 
         public void RefreshUI()
-        {            
+        {
+            ExchangeRateDataManager.LoadData();
             rateSettingContentPanel.FillDataIntoPanel();
+            rateSettingHeaderPanel.RefreshHeadertext();
         }
 
         void SaveCompletedMessageBoxRightButtonClicked(object sender, EventArgs e)
         {
+            RefreshUI();
             saveCompletedMessageBox.Visible = false;
             fadeForm.Visible = false;
             this.Visible = true;
@@ -164,7 +167,7 @@ namespace HME_RateDisplay
             FormMainMenu instanceFormMainMenu = FormsManager.GetFormMainMenu();
             instanceFormMainMenu.Visible = true;
             instanceFormMainMenu.Enabled = true;
-
+            instanceFormMainMenu.RefreshUI();
             instanceFormMainMenu.BringToFront();
             this.Visible = false;
         }
