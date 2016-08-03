@@ -15,7 +15,7 @@ namespace HME_RateDisplay
         public static int SCREEN_WIDTH;
         public static int SCREEN_HEIGHT;
         public int SCREEN_OFFSET_X;
-
+        
         public FixedSizeForm()
         {
             InitializeComponent();
@@ -39,7 +39,16 @@ namespace HME_RateDisplay
 
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 
-            if (isExtendedScreen)
+            if (GlobalConfig.IS_RATE_SETTER_MODE)
+            {
+                SCREEN_WIDTH = primaryScreen.WorkingArea.Width;
+                SCREEN_HEIGHT = primaryScreen.WorkingArea.Height;
+                SCREEN_OFFSET_X = 0;
+
+                this.Size = new System.Drawing.Size(SCREEN_WIDTH, SCREEN_HEIGHT);
+                this.Location = new Point(0, 0); 
+            }
+            else if (isExtendedScreen)
             {
                 SCREEN_WIDTH = targetScreen.WorkingArea.Width - 150;
                 SCREEN_HEIGHT = targetScreen.WorkingArea.Height - 120;

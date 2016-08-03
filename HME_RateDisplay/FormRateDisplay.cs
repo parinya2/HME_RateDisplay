@@ -313,12 +313,23 @@ namespace HME_RateDisplay
 
         public void RefreshHeadertext()
         {
+            
             DateTime date = DateTime.Now;
             string dateString = date.ToString("dd / MM / yyyy");
-            headerTextLabel.Text = "HATYAI  EXCHANGE Co., Ltd." + Environment.NewLine +
-                            "CURRENCY EXCHANGE RATE" + Environment.NewLine +
-                            "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();
-      
+
+            if (GlobalConfig.IS_RATE_SETTER_MODE)
+            {
+                headerTextLabel.Text = "โปรแกรมนี้ใช้สำหรับตั้งค่า Rate Exchange เท่านั้น" + Environment.NewLine +
+                "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
+            }
+            else
+            {
+                headerTextLabel.Text = "HATYAI  EXCHANGE Co., Ltd." + Environment.NewLine +
+                    "CURRENCY EXCHANGE RATE" + Environment.NewLine +
+                    "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
+            }
+
+
         }
     }
 }

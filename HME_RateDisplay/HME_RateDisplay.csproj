@@ -90,6 +90,7 @@
       <DependentUpon>FormRateDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="FormsManager.cs" />
+    <Compile Include="GlobalConfig.cs" />
     <Compile Include="LargeButton.cs">
       <SubType>Component</SubType>
     </Compile>

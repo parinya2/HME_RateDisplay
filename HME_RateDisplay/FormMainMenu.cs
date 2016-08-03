@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace HME_RateDisplay
 {
     public partial class FormMainMenu : FixedSizeForm
-    {
+    {        
         LargeButton rateDisplayButton;
         LargeButton settingButton;
         LargeButton reportButton;
@@ -44,7 +44,6 @@ namespace HME_RateDisplay
             reportCompletedMessageBox.Visible = false;
             reportCompletedMessageBox.rightButton.Click += new EventHandler(ReportCompletedMessageBoxRightButtonClicked);
 
-
             fadeForm = FormsManager.GetFormFadeView();
 
             FormFadeView baseBG = FormsManager.GetFormBaseBackgroundView();
@@ -72,18 +71,26 @@ namespace HME_RateDisplay
             rateDisplayButton.Text = "เข้าสู่หน้าหลัก";
             rateDisplayButton.Click += new EventHandler(ButtonClickedRateDisplay);
 
-
-            settingButton = new LargeButton();
-            settingButton.Location = new Point((SCREEN_WIDTH / 2 + buttonGap / 2),
-                                             (SCREEN_HEIGHT - settingButton.Height) / 2);
-            settingButton.Text = "ตั้งค่า";
-            settingButton.Click += new EventHandler(ButtonClickedSetting);
-
             reportButton = new LargeButton();
             reportButton.Location = new Point((SCREEN_WIDTH / 2 - reportButton.Width / 2),
                                              rateDisplayButton.Location.Y + rateDisplayButton.Size.Height + 40);
             reportButton.Text = "สร้าง Report";
             reportButton.Click += new EventHandler(ButtonClickedReport);
+
+            settingButton = new LargeButton();
+            if (!GlobalConfig.IS_RATE_SETTER_MODE)
+            {
+                settingButton.Location = new Point((SCREEN_WIDTH / 2 + buttonGap / 2),
+                                          (SCREEN_HEIGHT - settingButton.Height) / 2);
+            }
+            else
+            {
+                settingButton.Location = new Point(reportButton.Location.X,
+                                                (SCREEN_HEIGHT - settingButton.Height) / 2);
+            }
+
+            settingButton.Text = "ตั้งค่า";
+            settingButton.Click += new EventHandler(ButtonClickedSetting);
 
             exitButton = new Button();
             exitButton.Width = 200;
@@ -99,7 +106,12 @@ namespace HME_RateDisplay
 
             this.Controls.Add(headerPanel);
             this.Controls.Add(exitButton);
-            this.Controls.Add(rateDisplayButton);
+
+            if (!GlobalConfig.IS_RATE_SETTER_MODE)
+            { 
+                this.Controls.Add(rateDisplayButton); 
+            }
+          
             this.Controls.Add(settingButton);
             this.Controls.Add(reportButton);
         }
