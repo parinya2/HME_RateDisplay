@@ -1,33 +1,35 @@
-﻿USD1,T,USD       100,35.08,35.15#
-USD2,F,USD       50,35.03,35.15#
-USD3,F,USD       10-20,34.93,35.05#
-USD4,F,USD       5,34.83,35.05#
-USD5,F,USD       1-2,34.40,34.95#
-EUR,T,EUR         ,39.00,39.10#
-GBP,T,GBP         ,46.60,47.10#
-AUD,T,AUD         ,20.34,21.22#
-JPY1,T,JPY   5000-10000,0.3375,0.3430#
-JPY2,F,JPY   1000-2000,0.3365,-#
-CNY1,T,CNY       50-100,5.70,5.89#
-CNY2,F,CNY        5-20,5.60,5.75#
-CNY3,F,CNY        1,5.50,5.70#
-TWD,T,TWD          ,1.0850,-#
-SGD,T,SGD          ,26.00,26.10#
-KRW1,T,KRW    10000-50000,0.0305,0.0307#
-KRW2,F,KRW       1000,0.0270,0.0297#
-HKD,T,HKD        ,4.53,4.55#
-MYR1,T,MYR       50-100,8.68,8.72#
-MYR2,F,MYR       10-20,8.48,-#
-MYR3,F,MYR       1-5,7.00,8.62#
-SEK,T,SEK         ,3.87,4.10#
-CHF,T,CHF         ,35.10,38.10#
-NZD,T,NZD         ,24.10,25.10#
-CAD,T,CAD         ,25.90,27.10#
-NOK,T,NOK         ,3.80,4.10#
-DKK,T,DKK         ,4.93,5.12#
-PHP1,T,PHP    1000-50,0.68,0.86#
-PHP2,F,PHP      10-20,0.3,0.85#
-VAM,T,VAM         ,0.00145,0.0018#
-IDR,T,IDR         ,0.00252,0.00282#
-INR1,T,INR    1000-20,0.45,0.59#
-INR2,F,INR      5-10,0.3,0.59
+﻿USD1,T,F,USD       100,35.08,35.15,United States#
+USD2,F,F,               50,35.03,35.15,NULL#
+USD3,F,F,               10-20,34.93,35.05,NULL#
+USD4,F,F,               5,34.83,35.05,NULL#
+USD5,F,T,               1-2,34.40,34.95,NULL#
+EUR1,T,F,EUR      100-500,39.00,39.10,European Union#
+EUR2,F,F,                50,39.00,39.10,NULL#
+EUR3,F,T,                5-20 ,39.00,39.10,NULL#
+GBP1,T,F,GBP       50,46.60,47.10,United Kingdom#
+GBP2,F,T,             5-20,46.60,47.10,NULL#
+AUD,T,T,AUD         ,20.34,21.22,Australia#
+JPY1,T,F,JPY    10000,0.3375,0.3430,Japan#
+JPY2,F,T,           1000,0.3365,-,NULL#
+CNY1,T,F,CNY       50-100,5.70,5.89,China#
+CNY2,F,F,              10-20,5.60,5.75,NULL#
+CNY3,F,T,              1-5,5.50,5.70,NULL#
+TWD1,T,F,TWD        2000,1.0850,-,Taiwan#
+TWD2,F,T,            100-1000,1.0850,-,NULL#
+SGD1,T,F,SGD       1000,26.00,26.10,Singapore#
+SGD2,F,T,              5-100,26.00,26.10,NULL#
+KRW1,T,F,KRW    10000-50000,0.0305,0.0307,South Korea#
+KRW2,F,T,            1000,0.0270,0.0297,NULL#
+HKD,T,T,HKD        ,4.53,4.55,Hong Kong#
+MYR1,T,F,MYR       50-100,8.68,8.72,Myanmar#
+MYR2,F,F,          10-20,8.48,-,NULL#
+MYR3,F,T,          1-5,7.00,8.62,NULL#
+SEK,T,T,SEK         ,3.87,4.10,Sweden#
+CHF,T,T,CHF         ,35.10,38.10,Switzerland#
+NZD,T,T,NZD         ,24.10,25.10,New Zealand#
+CAD,T,T,CAD         ,25.90,27.10,Canada#
+NOK,T,T,NOK         ,3.80,4.10,Norway#
+DKK,T,T,DKK         ,4.93,5.12,Denmark#
+PHP,T,T,PHP    1000-50,0.68,0.86,Philippines#
+VND,T,T,VND      (:1000),0.00145,0.0018,Vietnam#
+IDR,T,T,IDR      (:1000),0.00252,0.00282,Indonesia

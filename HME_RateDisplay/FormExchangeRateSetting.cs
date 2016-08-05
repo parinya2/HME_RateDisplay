@@ -152,8 +152,9 @@ namespace HME_RateDisplay
                     return SAVE_ERROR_INVALID_CHAR;
                 }
                 String tmpLine = panelObj.currencyKey + "," + (panelObj.shouldDisplayFlag ? "T" : "F") + "," +
+                                 (panelObj.shouldDrawBottomLine ? "T" : "F") + ","+
                                  panelObj.currencyNameLabel.Text + "," + panelObj.currencyBuyTextBox.Text + "," +
-                                 panelObj.currencySellTextBox.Text;
+                                 panelObj.currencySellTextBox.Text + "," + panelObj.countryName;
                 if (i < singleDataRowPanelList.Length - 1) tmpLine += "#";
                 sb.AppendLine(tmpLine);
             }
@@ -230,6 +231,8 @@ namespace HME_RateDisplay
                 panelObj.currencyBuyTextBox.Text = dataObj.buyText;
                 panelObj.currencySellTextBox.Text = dataObj.sellText;
                 panelObj.shouldDisplayFlag = dataObj.shoudlDisplayFlag;
+                panelObj.shouldDrawBottomLine = dataObj.shoudlDrawBottomLine;
+                panelObj.countryName = dataObj.countryName;
             }
         }
     }
@@ -239,6 +242,8 @@ namespace HME_RateDisplay
         public PictureBox countryFlagPictureBox;
         public String currencyKey;
         public bool shouldDisplayFlag;
+        public bool shouldDrawBottomLine;
+        public String countryName;
         public TextBox currencyBuyTextBox;
         public TextBox currencySellTextBox;
         public Label currencyNameLabel;

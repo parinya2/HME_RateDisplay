@@ -152,7 +152,7 @@
     <EmbeddedResource Include="Images\FlagNZD.jpg" />
     <EmbeddedResource Include="Images\FlagPHP.jpg" />
     <EmbeddedResource Include="Images\FlagSEK.jpg" />
-    <EmbeddedResource Include="Images\FlagVAM.jpg" />
+    <EmbeddedResource Include="Images\FlagVND.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Private\token2">

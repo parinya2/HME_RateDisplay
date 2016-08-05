@@ -132,13 +132,15 @@ namespace HME_RateDisplay
             {
                 String text = resultRowArr[i].Trim();
                 String[] tmpArr = text.Split(separatorLv2);
-                if (tmpArr.Length == 5)
+                if (tmpArr.Length == 7)
                 {
                     String currencyKey = tmpArr[0];
                     bool shouldDisplayFlag = tmpArr[1].Equals("T");
-                    String currencyText = tmpArr[2];
-                    String buyRate = tmpArr[3];
-                    String sellRate = tmpArr[4];
+                    bool shouldDrawBottomLine = tmpArr[2].Equals("T");
+                    String currencyText = tmpArr[3];
+                    String buyRate = tmpArr[4];
+                    String sellRate = tmpArr[5];
+                    String countryName = tmpArr[6];
 
                     currencyKeyArr.Add(currencyKey);
 
@@ -146,8 +148,10 @@ namespace HME_RateDisplay
                     obj.currencyKey = currencyKey;
                     obj.currencyText = currencyText;
                     obj.shoudlDisplayFlag = shouldDisplayFlag;
+                    obj.shoudlDrawBottomLine = shouldDrawBottomLine;
                     obj.buyText = buyRate;
                     obj.sellText = sellRate;
+                    obj.countryName = countryName;
                     String imageName = "Flag" + currencyKey.Substring(0,3) + ".jpg";
                     obj.countryFlagImage = Util.GetImageFromImageResources(imageName);
 
@@ -164,6 +168,8 @@ namespace HME_RateDisplay
         public String currencyKey;
         public String buyText;
         public String sellText;
+        public String countryName;
         public bool shoudlDisplayFlag;
+        public bool shoudlDrawBottomLine;
     }
 }

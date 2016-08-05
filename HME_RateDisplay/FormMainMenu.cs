@@ -101,7 +101,7 @@ namespace HME_RateDisplay
             exitButton.Text = "ออกจากโปรแกรม";
             exitButton.Click += new EventHandler(ExitButtonClicked);
 
-            headerPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH , 260);
+            headerPanel = new RateDisplayHeaderPanel(SCREEN_WIDTH , 150);
             headerPanel.Location = new Point(0 , 0);
 
             this.Controls.Add(headerPanel);
