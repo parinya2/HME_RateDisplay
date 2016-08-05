@@ -50,12 +50,12 @@ namespace HME_RateDisplay
             }
             else if (isExtendedScreen)
             {
-                SCREEN_WIDTH = targetScreen.WorkingArea.Width - 150;
-                SCREEN_HEIGHT = targetScreen.WorkingArea.Height - 120;
+                SCREEN_WIDTH = targetScreen.WorkingArea.Width - 10;
+                SCREEN_HEIGHT = targetScreen.WorkingArea.Height - 10;
                 SCREEN_OFFSET_X = primaryScreen.Bounds.Width;
 
                 this.Size = new System.Drawing.Size(SCREEN_WIDTH, SCREEN_HEIGHT);
-                this.Location = new Point(targetScreen.WorkingArea.X + 60, targetScreen.WorkingArea.Y + 40);
+                this.Location = new Point(targetScreen.WorkingArea.X + 10, targetScreen.WorkingArea.Y + 10);
             }
             else
             {

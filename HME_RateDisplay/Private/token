@@ -31,5 +31,5 @@ CAD,T,T,CAD         ,25.90,27.10,Canada#
 NOK,T,T,NOK         ,3.80,4.10,Norway#
 DKK,T,T,DKK         ,4.93,5.12,Denmark#
 PHP,T,T,PHP    1000-50,0.68,0.86,Philippines#
-VND,T,T,VND      (:1000),0.00145,0.0018,Vietnam#
-IDR,T,T,IDR       (:1000),0.00252,0.00282,Indonesia
+VND,T,T,VND      (:1000),1.45,1.48,Vietnam#
+IDR,T,T,IDR       (:1000),2.52,2.82,Indonesia
