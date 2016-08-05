@@ -338,23 +338,46 @@ namespace HME_RateDisplay
 
     public class RateDisplayHeaderPanel : Panel
     {
-        Label headerTextLabel;
+        Label headerTextLabel1;
+        Label headerTextLabel2;
+        Label headerTextLabel3;
+        int gapY = 3;
         public RateDisplayHeaderPanel(int width, int height)
         {
             this.Width = width;
             this.Height = height;
             this.BackColor = Color.DarkBlue;
 
-            headerTextLabel = new Label();
-            headerTextLabel.ForeColor = Color.White;
-            headerTextLabel.Width = (int)(width * 0.85);
-            headerTextLabel.Height = 100;
-            headerTextLabel.TextAlign = ContentAlignment.MiddleCenter;
-            headerTextLabel.Font = new Font(this.Font.FontFamily, 14);
-            headerTextLabel.Location = new Point((this.Width - headerTextLabel.Width) / 2 , (this.Height - headerTextLabel.Height) / 2);
+            headerTextLabel1 = new Label();
+            headerTextLabel1.ForeColor = Color.White;
+            headerTextLabel1.Width = (int)(width * 0.85);
+            headerTextLabel1.Height = 30;
+            headerTextLabel1.TextAlign = ContentAlignment.MiddleCenter;
+            headerTextLabel1.Font = new Font(this.Font.FontFamily, 14);
+            headerTextLabel1.Location = new Point((this.Width - headerTextLabel1.Width) / 2 , 20);
+
+            headerTextLabel2 = new Label();
+            headerTextLabel2.ForeColor = headerTextLabel1.ForeColor;
+            headerTextLabel2.Width = headerTextLabel1.Width;
+            headerTextLabel2.Height = headerTextLabel1.Height;
+            headerTextLabel2.TextAlign = ContentAlignment.MiddleLeft;
+            headerTextLabel2.Font = headerTextLabel1.Font;
+            headerTextLabel2.Location = new Point(headerTextLabel1.Location.X, headerTextLabel1.Location.Y + headerTextLabel1.Height + gapY);//new Point((this.Width - headerTextLabel1.Width) / 2, (this.Height - headerTextLabel1.Height) / 2);
+
+            headerTextLabel3 = new Label();
+            headerTextLabel3.ForeColor = headerTextLabel1.ForeColor;
+            headerTextLabel3.Width = headerTextLabel1.Width;
+            headerTextLabel3.Height = headerTextLabel1.Height;
+            headerTextLabel3.TextAlign = ContentAlignment.MiddleLeft;
+            headerTextLabel3.Font = headerTextLabel1.Font;
+            headerTextLabel3.Location = new Point(headerTextLabel1.Location.X, headerTextLabel2.Location.Y + headerTextLabel2.Height + gapY);//new Point((this.Width - headerTextLabel1.Width) / 2, (this.Height - headerTextLabel1.Height) / 2);
+           
+
             RefreshHeadertext();
 
-            this.Controls.Add(headerTextLabel);
+            this.Controls.Add(headerTextLabel1);
+            this.Controls.Add(headerTextLabel2);
+            this.Controls.Add(headerTextLabel3);
         }
 
         public void RefreshHeadertext()
@@ -365,14 +388,15 @@ namespace HME_RateDisplay
 
             if (GlobalConfig.IS_RATE_SETTER_MODE)
             {
-                headerTextLabel.Text = "โปรแกรมนี้ใช้สำหรับตั้งค่า Rate Exchange เท่านั้น" + Environment.NewLine +
-                "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
+                headerTextLabel1.Text = "โปรแกรมนี้ใช้สำหรับตั้งค่า Rate Exchange เท่านั้น";
+                headerTextLabel2.Text = "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
             }
             else
             {
-                headerTextLabel.Text = "HATYAI  EXCHANGE Co., Ltd." + Environment.NewLine +
-                    "CURRENCY EXCHANGE RATE" + Environment.NewLine +
-                    "Date : " + dateString + "    Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
+                headerTextLabel1.Text = "HATYAI  EXCHANGE Co., Ltd.";
+                headerTextLabel2.Text = "CURRENCY EXCHANGE RATE";
+                headerTextLabel3.Text = "Date : " + dateString + 
+                                        "                                Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
             }
 
 
