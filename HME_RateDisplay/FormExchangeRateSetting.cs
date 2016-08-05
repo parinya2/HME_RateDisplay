@@ -190,8 +190,6 @@ namespace HME_RateDisplay
             this.Height = height;
             this.SetAutoScrollMargin(0, requiredHeight - this.Height - 20);
             int gapY = 5;
-            int gapX = 7;
-
 
             singleDataRowPanelList = new RateSettingSingleDataRowPanel[ExchangeRateDataManager.currencyKeyArr.Count];
             ROW_COUNT_PER_COLUMN = (ExchangeRateDataManager.currencyKeyArr.Count / 2) + 1;

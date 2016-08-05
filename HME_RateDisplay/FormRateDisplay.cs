@@ -114,8 +114,8 @@ namespace HME_RateDisplay
             this.Height = height;
             this.BackColor = Color.Gray;
 
-            int gapY = 7;
-            int gapX = 7;
+            int gapY = GlobalConfig.RATE_DISPLAY_GAP_Y;
+            int gapX = GlobalConfig.RATE_DISPLAY_GAP_X;
             int rateDisplaySingleDataRowHeight = 80;
             ROW_COUNT_PER_PAGE = (int)(this.Height / (rateDisplaySingleDataRowHeight + gapY));
             singleDataRowPanelList = new RateDisplaySingleDataRowPanel[ROW_COUNT_PER_PAGE - 1];
@@ -186,8 +186,8 @@ namespace HME_RateDisplay
         Label verticalLineLabel2;
         Label bottomLineLabel;
 
-        int gapY = 7;
-        int gapX = 7;
+        int gapY = GlobalConfig.RATE_DISPLAY_GAP_Y;
+        int gapX = GlobalConfig.RATE_DISPLAY_GAP_X;
 
         int rateDisplayFontSize = 27;
 
@@ -353,7 +353,7 @@ namespace HME_RateDisplay
             headerTextLabel1.Width = (int)(width * 0.85);
             headerTextLabel1.Height = 30;
             headerTextLabel1.TextAlign = ContentAlignment.MiddleCenter;
-            headerTextLabel1.Font = new Font(this.Font.FontFamily, 14);
+            headerTextLabel1.Font = new Font(this.Font.FontFamily, 16);
             headerTextLabel1.Location = new Point((this.Width - headerTextLabel1.Width) / 2 , 20);
 
             headerTextLabel2 = new Label();
@@ -398,8 +398,6 @@ namespace HME_RateDisplay
                 headerTextLabel3.Text = "Date : " + dateString + 
                                         "                                Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
             }
-
-
         }
     }
 }

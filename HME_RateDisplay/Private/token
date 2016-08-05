@@ -10,20 +10,20 @@ GBP1,T,F,GBP       50,46.60,47.10,United Kingdom#
 GBP2,F,T,              5-20,46.60,47.10,NULL#
 AUD,T,T,AUD         ,20.34,21.22,Australia#
 JPY1,T,F,JPY       10000,0.3375,0.3430,Japan#
-JPY2,F,T,             1000,0.3365,-,NULL#
+JPY2,F,T,              1000,0.3365,-,NULL#
 CNY1,T,F,CNY       50-100,5.70,5.89,China#
 CNY2,F,F,              10-20,5.60,5.75,NULL#
 CNY3,F,T,              1-5,5.50,5.70,NULL#
 TWD1,T,F,TWD      2000,1.0850,-,Taiwan#
-TWD2,F,T,             100-1000,1.0850,-,NULL#
+TWD2,F,T,              100-1000,1.0850,-,NULL#
 SGD1,T,F,SGD       1000,26.00,26.10,Singapore#
-SGD2,F,T,              5-100,26.00,26.10,NULL#
+SGD2,F,T,                5-100,26.00,26.10,NULL#
 KRW1,T,F,KRW    10000-50000,0.0305,0.0307,South Korea#
-KRW2,F,T,            1000,0.0270,0.0297,NULL#
+KRW2,F,T,             1000,0.0270,0.0297,NULL#
 HKD,T,T,HKD        ,4.53,4.55,Hong Kong#
-MYR1,T,F,MYR       50-100,8.68,8.72,Myanmar#
-MYR2,F,F,              10-20,8.48,-,NULL#
-MYR3,F,T,              1-5,7.00,8.62,NULL#
+MYR1,T,F,MYR       50-100,8.68,8.72,Malaysia#
+MYR2,F,F,               10-20,8.48,-,NULL#
+MYR3,F,T,               1-5,7.00,8.62,NULL#
 SEK,T,T,SEK         ,3.87,4.10,Sweden#
 CHF,T,T,CHF         ,35.10,38.10,Switzerland#
 NZD,T,T,NZD         ,24.10,25.10,New Zealand#
