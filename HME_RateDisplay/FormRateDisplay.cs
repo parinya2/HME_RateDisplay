@@ -239,7 +239,7 @@ namespace HME_RateDisplay
 
             currencyBuyLabel = new Label();
             currencyBuyLabel.ForeColor = Color.LawnGreen;
-            currencyBuyLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX;
+            currencyBuyLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX * 9;
             currencyBuyLabel.Height = this.Height - gapY * 2;
             currencyBuyLabel.Location = new Point(verticalLineLabel1.Location.X + gapX , gapY);
             currencyBuyLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
@@ -247,7 +247,7 @@ namespace HME_RateDisplay
 
             currencySellLabel = new Label();
             currencySellLabel.ForeColor = Color.Yellow;
-            currencySellLabel.Width = this.Width - verticalLineLabel2.Location.X - gapX;
+            currencySellLabel.Width = this.Width - verticalLineLabel2.Location.X - gapX * 9;
             currencySellLabel.Height = this.Height - gapY * 2;
             currencySellLabel.Location = new Point(verticalLineLabel2.Location.X + gapX , gapY);
             currencySellLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
