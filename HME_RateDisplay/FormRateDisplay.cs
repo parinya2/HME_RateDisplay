@@ -17,6 +17,7 @@ namespace HME_RateDisplay
         int currentStartIndex = -1;
         int currentStopIndex = -1;
         Button goBackButton;
+        int DISPLAY_INTERVAL = 10;
 
         public FormRateDisplay()
         {
@@ -24,7 +25,7 @@ namespace HME_RateDisplay
 
             this.Load += new EventHandler(OnFormLoaded);
 
-            rateDisplaySignalClock = new SignalClock(200);
+            rateDisplaySignalClock = new SignalClock(DISPLAY_INTERVAL * 100);
             rateDisplaySignalClock.TheTimeChanged += new SignalClock.SignalClockTickHandler(RateDisplaySignalClockHasChanged);
         }
 
@@ -273,9 +274,9 @@ namespace HME_RateDisplay
             {
                 currencyNameLabel.Location = new Point((verticalLineLabel1.Location.X - currencyNameLabel.Width) / 2 , gapY);
                 currencyNameLabel.TextAlign = ContentAlignment.MiddleCenter;
-                currencyNameLabel.ForeColor = Color.PowderBlue;
-                currencyBuyLabel.ForeColor = Color.PowderBlue;
-                currencySellLabel.ForeColor = Color.PowderBlue;
+                currencyNameLabel.ForeColor = Color.FromArgb(0, 153, 153);
+                currencyBuyLabel.ForeColor = Color.FromArgb(0, 153, 153);
+                currencySellLabel.ForeColor = Color.FromArgb(0, 153, 153);
             }
             else 
             {
@@ -349,27 +350,27 @@ namespace HME_RateDisplay
             this.BackColor = Color.DarkBlue;
 
             headerTextLabel1 = new Label();
-            headerTextLabel1.ForeColor = Color.White;
+            headerTextLabel1.ForeColor = Color.Yellow;
             headerTextLabel1.Width = (int)(width * 0.85);
-            headerTextLabel1.Height = 30;
+            headerTextLabel1.Height = 50;
             headerTextLabel1.TextAlign = ContentAlignment.MiddleCenter;
-            headerTextLabel1.Font = new Font(this.Font.FontFamily, 16);
+            headerTextLabel1.Font = new Font(this.Font.FontFamily, 22);
             headerTextLabel1.Location = new Point((this.Width - headerTextLabel1.Width) / 2 , 20);
 
             headerTextLabel2 = new Label();
-            headerTextLabel2.ForeColor = headerTextLabel1.ForeColor;
+            headerTextLabel2.ForeColor = Color.White;
             headerTextLabel2.Width = headerTextLabel1.Width;
-            headerTextLabel2.Height = headerTextLabel1.Height;
+            headerTextLabel2.Height = 30;
             headerTextLabel2.TextAlign = ContentAlignment.MiddleLeft;
-            headerTextLabel2.Font = headerTextLabel1.Font;
+            headerTextLabel2.Font = new Font(this.Font.FontFamily, 16);
             headerTextLabel2.Location = new Point(headerTextLabel1.Location.X, headerTextLabel1.Location.Y + headerTextLabel1.Height + gapY);//new Point((this.Width - headerTextLabel1.Width) / 2, (this.Height - headerTextLabel1.Height) / 2);
 
             headerTextLabel3 = new Label();
-            headerTextLabel3.ForeColor = headerTextLabel1.ForeColor;
+            headerTextLabel3.ForeColor = Color.White;
             headerTextLabel3.Width = headerTextLabel1.Width;
-            headerTextLabel3.Height = headerTextLabel1.Height;
+            headerTextLabel3.Height = 30;
             headerTextLabel3.TextAlign = ContentAlignment.MiddleLeft;
-            headerTextLabel3.Font = headerTextLabel1.Font;
+            headerTextLabel3.Font = new Font(this.Font.FontFamily, 16);
             headerTextLabel3.Location = new Point(headerTextLabel1.Location.X, headerTextLabel2.Location.Y + headerTextLabel2.Height + gapY);//new Point((this.Width - headerTextLabel1.Width) / 2, (this.Height - headerTextLabel1.Height) / 2);
            
 
@@ -394,7 +395,7 @@ namespace HME_RateDisplay
             else
             {
                 headerTextLabel1.Text = "HATYAI  EXCHANGE Co., Ltd.";
-                headerTextLabel2.Text = "CURRENCY EXCHANGE RATE";
+                headerTextLabel2.Text = "EXCHANGE RATE";
                 headerTextLabel3.Text = "Date : " + dateString + 
                                         "                                Last Updated : " + ExchangeRateDataManager.GetUpdatedTimeString();      
             }

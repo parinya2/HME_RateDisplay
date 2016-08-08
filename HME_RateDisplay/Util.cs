@@ -29,7 +29,7 @@ namespace HME_RateDisplay
 
         public static string GetDailyReportPath()
         {
-            string dateString = DateTime.Now.ToString("dd-MM-yyyy");
+            string dateString = DateTime.Now.ToString("dd-MM-yyyy เวลา HH.mm.ss น.");
             return GetExecutingPath() + "/Reports/รายงานวันที่ " + dateString +".txt";
         }
 
