@@ -92,8 +92,16 @@ namespace HME_RateDisplay
             foreach (string key in currencyKeyArr)
             {
                 ExchangeRateDataObject dataObj = GetExchangeRateObjectForKey(key);
-                string tabString = dataObj.currencyText.Length > 15 ? "\t" : "\t\t";              
-                string tmp = dataObj.currencyText + tabString + "Buy = " + dataObj.buyText + "\tSell = " + dataObj.sellText;
+                string currencyText = dataObj.currencyText.Equals(GlobalConfig.NULL_CURRENCY_NAME) ? "" : dataObj.currencyText;
+                string denomText = dataObj.denomText.Equals(GlobalConfig.NULL_DENOM_NAME) ? "" : dataObj.denomText;
+                string countryText = dataObj.countryName.Equals(GlobalConfig.NULL_COUNTRY_NAME) ? "" : dataObj.countryName;
+                string tabString = denomText.Length > 7 ? "\t" : "\t\t";              
+                
+                string tmp = currencyText + "\t" + 
+                             denomText + tabString + 
+                             "Buy = " + dataObj.buyText + "\t" +
+                             "Sell = " + dataObj.sellText + "\t" +
+                             countryText;
                 sb.Append(tmp);
                 sb.Append(Environment.NewLine);
             }
@@ -132,21 +140,23 @@ namespace HME_RateDisplay
             {
                 String text = resultRowArr[i].Trim();
                 String[] tmpArr = text.Split(separatorLv2);
-                if (tmpArr.Length == 7)
+                if (tmpArr.Length == 8)
                 {
                     String currencyKey = tmpArr[0];
                     bool shouldDisplayFlag = tmpArr[1].Equals("T");
                     bool shouldDrawBottomLine = tmpArr[2].Equals("T");
                     String currencyText = tmpArr[3];
-                    String buyRate = tmpArr[4];
-                    String sellRate = tmpArr[5];
-                    String countryName = tmpArr[6];
+                    String denomText = tmpArr[4];
+                    String buyRate = tmpArr[5];
+                    String sellRate = tmpArr[6];
+                    String countryName = tmpArr[7];
 
                     currencyKeyArr.Add(currencyKey);
 
                     ExchangeRateDataObject obj = new ExchangeRateDataObject();
                     obj.currencyKey = currencyKey;
                     obj.currencyText = currencyText;
+                    obj.denomText = denomText;
                     obj.shoudlDisplayFlag = shouldDisplayFlag;
                     obj.shoudlDrawBottomLine = shouldDrawBottomLine;
                     obj.buyText = buyRate;
@@ -165,6 +175,7 @@ namespace HME_RateDisplay
     {
         public Bitmap countryFlagImage;
         public String currencyText;
+        public String denomText;
         public String currencyKey;
         public String buyText;
         public String sellText;

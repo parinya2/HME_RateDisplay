@@ -151,10 +151,14 @@ namespace HME_RateDisplay
                 {
                     return SAVE_ERROR_INVALID_CHAR;
                 }
-                String tmpLine = panelObj.currencyKey + "," + (panelObj.shouldDisplayFlag ? "T" : "F") + "," +
+                String tmpLine = panelObj.currencyKey + "," + 
+                                 (panelObj.shouldDisplayFlag ? "T" : "F") + "," +
                                  (panelObj.shouldDrawBottomLine ? "T" : "F") + ","+
-                                 panelObj.currencyNameLabel.Text + "," + panelObj.currencyBuyTextBox.Text + "," +
-                                 panelObj.currencySellTextBox.Text + "," + panelObj.countryName;
+                                 (panelObj.currencyNameLabel.Text.Equals("") ? GlobalConfig.NULL_CURRENCY_NAME : panelObj.currencyNameLabel.Text) + "," +
+                                 (panelObj.denomLabel.Text.Equals("") ? GlobalConfig.NULL_DENOM_NAME : panelObj.denomLabel.Text) + "," + 
+                                 panelObj.currencyBuyTextBox.Text + "," +
+                                 panelObj.currencySellTextBox.Text + "," + 
+                                 panelObj.countryName;
                 if (i < singleDataRowPanelList.Length - 1) tmpLine += "#";
                 sb.AppendLine(tmpLine);
             }
@@ -225,7 +229,8 @@ namespace HME_RateDisplay
                 ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(panelObj.currencyKey);
 
                 panelObj.countryFlagPictureBox.Image = dataObj.shoudlDisplayFlag ? dataObj.countryFlagImage : null;
-                panelObj.currencyNameLabel.Text = dataObj.currencyText;
+                panelObj.currencyNameLabel.Text = dataObj.currencyText.Equals(GlobalConfig.NULL_CURRENCY_NAME) ? "" : dataObj.currencyText;
+                panelObj.denomLabel.Text = dataObj.denomText.Equals(GlobalConfig.NULL_DENOM_NAME) ? "" : dataObj.denomText;
                 panelObj.currencyBuyTextBox.Text = dataObj.buyText;
                 panelObj.currencySellTextBox.Text = dataObj.sellText;
                 panelObj.shouldDisplayFlag = dataObj.shoudlDisplayFlag;
@@ -245,6 +250,7 @@ namespace HME_RateDisplay
         public TextBox currencyBuyTextBox;
         public TextBox currencySellTextBox;
         public Label currencyNameLabel;
+        public Label denomLabel;
         Label currencyBuyLabel;
         Label currencySellLabel;
         Label verticalLineLabel1;
@@ -270,7 +276,7 @@ namespace HME_RateDisplay
             verticalLineLabel2.Width = verticalLineLabel1.Width;
             verticalLineLabel2.Height = verticalLineLabel1.Height;
 
-            verticalLineLabel1.Location = new Point((int)(this.Width * 0.4), 0);
+            verticalLineLabel1.Location = new Point((int)(this.Width * 0.42), 0);
             verticalLineLabel2.Location = new Point((int)(this.Width * 0.7), 0);
 
             countryFlagPictureBox = new PictureBox();
@@ -280,12 +286,20 @@ namespace HME_RateDisplay
             countryFlagPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
             currencyNameLabel = new Label();
-            currencyNameLabel.Width = verticalLineLabel1.Location.X - countryFlagPictureBox.Width;
+            currencyNameLabel.Width = 50;
             currencyNameLabel.Height = this.Height - gapY * 2;
             currencyNameLabel.Location = new Point(countryFlagPictureBox.Location.X + countryFlagPictureBox.Width + gapX,
                                                     gapY);
             currencyNameLabel.Font = new Font(this.Font.FontFamily, fontSize);
             currencyNameLabel.TextAlign = ContentAlignment.MiddleLeft;
+
+            denomLabel = new Label();
+            denomLabel.Width = verticalLineLabel1.Location.X - (currencyNameLabel.Location.X + currencyNameLabel.Width);
+            denomLabel.Height = this.Height - gapY * 2;
+            denomLabel.Location = new Point(currencyNameLabel.Location.X + currencyNameLabel.Width + gapX,
+                                                    gapY);
+            denomLabel.Font = new Font(this.Font.FontFamily, fontSize);
+            denomLabel.TextAlign = ContentAlignment.MiddleCenter;
 
             currencyBuyLabel = new Label();
             currencyBuyLabel.ForeColor = Color.Black;
@@ -323,6 +337,7 @@ namespace HME_RateDisplay
             this.Controls.Add(verticalLineLabel2);
             this.Controls.Add(countryFlagPictureBox);
             this.Controls.Add(currencyNameLabel);
+            this.Controls.Add(denomLabel);
             this.Controls.Add(currencyBuyLabel);
             this.Controls.Add(currencySellLabel);
             this.Controls.Add(currencyBuyTextBox);

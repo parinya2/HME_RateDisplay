@@ -131,6 +131,7 @@ namespace HME_RateDisplay
                     rateDisplaySingleDataRowPanel.Location = new Point(gapX, gapY);
                     rateDisplaySingleDataRowPanel.SetIsHeaderRow(true);
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName("Currency");
+                    rateDisplaySingleDataRowPanel.SetTextDenom("Denom");
                     rateDisplaySingleDataRowPanel.SetTextCurrencyBuy("Buy");
                     rateDisplaySingleDataRowPanel.SetTextCurrencySell("Sell");
                     rateDisplaySingleDataRowPanel.SetCurrencyImage(null);
@@ -162,6 +163,7 @@ namespace HME_RateDisplay
                     ExchangeRateDataObject dataObj = ExchangeRateDataManager.GetExchangeRateObjectForKey(targetKey);
 
                     rateDisplaySingleDataRowPanel.SetTextCurrencyName(dataObj.currencyText);
+                    rateDisplaySingleDataRowPanel.SetTextDenom(dataObj.denomText);
                     rateDisplaySingleDataRowPanel.SetTextCurrencyBuy(dataObj.buyText);
                     rateDisplaySingleDataRowPanel.SetTextCurrencySell(dataObj.sellText);
                     rateDisplaySingleDataRowPanel.SetCurrencyImage(dataObj.shoudlDisplayFlag ? dataObj.countryFlagImage : null);
@@ -181,8 +183,10 @@ namespace HME_RateDisplay
         PictureBox countryFlagPictureBox;
         Label countryNameLabel;
         Label currencyNameLabel;
+        Label denomLabel;
         Label currencyBuyLabel;
         Label currencySellLabel;
+        Label verticalLineLabel0;
         Label verticalLineLabel1;
         Label verticalLineLabel2;
         Label bottomLineLabel;
@@ -198,15 +202,20 @@ namespace HME_RateDisplay
             this.Height = height;
             this.BackColor = Color.Black;
 
+            verticalLineLabel0 = new Label();
+            verticalLineLabel0.BackColor = GlobalConfig.RATE_DISPLAY_LINE_COLOR;
+            verticalLineLabel0.Width = gapX;
+            verticalLineLabel0.Height = this.Height;
+
             verticalLineLabel1 = new Label();
-            verticalLineLabel1.BackColor = GlobalConfig.RATE_DISPLAY_LINE_COLOR;
-            verticalLineLabel1.Width = gapX;
-            verticalLineLabel1.Height = this.Height;
+            verticalLineLabel1.BackColor = verticalLineLabel0.BackColor;
+            verticalLineLabel1.Width = verticalLineLabel0.Width;
+            verticalLineLabel1.Height = verticalLineLabel0.Height;
 
             verticalLineLabel2 = new Label();
-            verticalLineLabel2.BackColor = verticalLineLabel1.BackColor;
-            verticalLineLabel2.Width = verticalLineLabel1.Width;
-            verticalLineLabel2.Height = verticalLineLabel1.Height;
+            verticalLineLabel2.BackColor = verticalLineLabel0.BackColor;
+            verticalLineLabel2.Width = verticalLineLabel0.Width;
+            verticalLineLabel2.Height = verticalLineLabel0.Height;
 
             bottomLineLabel = new Label();
             bottomLineLabel.BackColor = GlobalConfig.RATE_DISPLAY_LINE_COLOR;
@@ -214,6 +223,7 @@ namespace HME_RateDisplay
             bottomLineLabel.Height = gapY;
             bottomLineLabel.Location = new Point(0, this.Height - gapY);
 
+            verticalLineLabel0.Location = new Point((int)(this.Width * 0.3), 0);
             verticalLineLabel1.Location = new Point((int)(this.Width * 0.6) , 0);
             verticalLineLabel2.Location = new Point((int)(this.Width * 0.8) , 0);
 
@@ -234,9 +244,16 @@ namespace HME_RateDisplay
             countryNameLabel.TextAlign = ContentAlignment.MiddleLeft;
 
             currencyNameLabel = new Label();
-            currencyNameLabel.Width = verticalLineLabel1.Location.X - countryNameLabel.Width;
+            currencyNameLabel.Width = verticalLineLabel0.Location.X - countryNameLabel.Width;
             currencyNameLabel.Height = this.Height - gapY * 2;
             currencyNameLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
+
+            denomLabel = new Label();
+            denomLabel.Width = verticalLineLabel1.Location.X - verticalLineLabel0.Location.X - verticalLineLabel0.Width - gapX * 3;
+            denomLabel.Height = this.Height - gapY * 2;
+            denomLabel.Location = new Point(verticalLineLabel0.Location.X + verticalLineLabel0.Width, gapY);
+            denomLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
+            denomLabel.TextAlign = ContentAlignment.MiddleCenter;
 
             currencyBuyLabel = new Label();
             currencyBuyLabel.ForeColor = Color.LawnGreen;
@@ -254,29 +271,37 @@ namespace HME_RateDisplay
             currencySellLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
             currencySellLabel.TextAlign = ContentAlignment.MiddleRight;
 
-            
+            this.Controls.Add(verticalLineLabel0);
             this.Controls.Add(verticalLineLabel1);
             this.Controls.Add(verticalLineLabel2);
             this.Controls.Add(countryFlagPictureBox);
             this.Controls.Add(countryNameLabel);
+            this.Controls.Add(denomLabel);
             this.Controls.Add(currencyNameLabel);           
             this.Controls.Add(currencyBuyLabel);
             this.Controls.Add(currencySellLabel);
             this.Controls.Add(bottomLineLabel);
         }
 
-        public void SetIsHeaderRow(bool flag)
+        public void SetIsHeaderRow(bool isHeader)
         {
-            currencyBuyLabel.TextAlign = flag ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
-            currencySellLabel.TextAlign = flag ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
+            currencyBuyLabel.TextAlign = isHeader ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
+            currencySellLabel.TextAlign = isHeader ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleRight;
             
-            if (flag)
+            if (isHeader)
             {
-                currencyNameLabel.Location = new Point((verticalLineLabel1.Location.X - currencyNameLabel.Width) / 2 , gapY);
+                countryNameLabel.Width = 1;
+                currencyNameLabel.Location = new Point(0 , gapY);
+                currencyNameLabel.Width = verticalLineLabel0.Location.X - gapX * 2;
                 currencyNameLabel.TextAlign = ContentAlignment.MiddleCenter;
                 currencyNameLabel.ForeColor = Color.FromArgb(0, 153, 153);
+                denomLabel.ForeColor = Color.FromArgb(0, 153, 153);
+
                 currencyBuyLabel.ForeColor = Color.FromArgb(0, 153, 153);
                 currencySellLabel.ForeColor = Color.FromArgb(0, 153, 153);
+
+                currencyBuyLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX * 2;
+                currencySellLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX * 2;
             }
             else 
             {
@@ -284,6 +309,7 @@ namespace HME_RateDisplay
                                             gapY);
                 currencyNameLabel.TextAlign = ContentAlignment.MiddleLeft;
                 currencyNameLabel.ForeColor = Color.White;
+                denomLabel.ForeColor = Color.White;
                 currencyBuyLabel.ForeColor = Color.LawnGreen;
                 currencySellLabel.ForeColor = Color.Yellow;
             }
@@ -298,8 +324,7 @@ namespace HME_RateDisplay
             else
             {
                 this.countryNameLabel.Text = text.Equals(GlobalConfig.NULL_COUNTRY_NAME) ? null : text;
-            }
-            
+            }            
         }
 
         public void SetShouldDrawBottomLine(bool flag)
@@ -324,13 +349,34 @@ namespace HME_RateDisplay
 
         public void SetTextCurrencyName(String text)
         {
-            this.currencyNameLabel.Text = text;
+            if (text == null)
+            {
+                this.currencyNameLabel.Text = "";
+            }
+            else
+            {
+                this.currencyNameLabel.Text = text.Equals(GlobalConfig.NULL_CURRENCY_NAME) ? null : text;
+            }
         }
+
+        public void SetTextDenom(String text)
+        {
+            if (text == null)
+            {
+                this.denomLabel.Text = "";
+            }
+            else
+            {
+                this.denomLabel.Text = text.Equals(GlobalConfig.NULL_DENOM_NAME) ? "-" : text;
+            }
+        }
+          
 
         public void ClearAllData()
         {
             this.countryFlagPictureBox.Image = null;
             this.currencyNameLabel.Text = null;
+            this.denomLabel.Text = null;
             this.currencyBuyLabel.Text = null;
             this.currencySellLabel.Text = null;
             this.countryNameLabel.Text = null;
