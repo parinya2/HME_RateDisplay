@@ -118,14 +118,13 @@ namespace HME_RateDisplay
             int gapY = GlobalConfig.RATE_DISPLAY_GAP_Y;
             int gapX = GlobalConfig.RATE_DISPLAY_GAP_X;
             int rateDisplaySingleDataRowHeight = 80;
-            ROW_COUNT_PER_PAGE = (int)(this.Height / (rateDisplaySingleDataRowHeight + gapY));
+            ROW_COUNT_PER_PAGE = (int)(this.Height / (rateDisplaySingleDataRowHeight));
             singleDataRowPanelList = new RateDisplaySingleDataRowPanel[ROW_COUNT_PER_PAGE - 1];
 
             for (int i = 0; i < ROW_COUNT_PER_PAGE; i++)
             {
                 RateDisplaySingleDataRowPanel rateDisplaySingleDataRowPanel = new RateDisplaySingleDataRowPanel(this.Width - gapX * 2, rateDisplaySingleDataRowHeight);
-                rateDisplaySingleDataRowPanel.Location = new Point(gapX, gapY + (rateDisplaySingleDataRowPanel.Height + gapY) * i);
-
+              
                 if (i == 0)
                 {
                     rateDisplaySingleDataRowPanel.Location = new Point(gapX, gapY);
