@@ -237,13 +237,12 @@ namespace HME_RateDisplay
             countryNameLabel = new Label();
             countryNameLabel.ForeColor = Color.White;
             countryNameLabel.Height = countryNameLabelHeight;
-            countryNameLabel.Width = countryFlagPictureBox.Width * 4;
+            countryNameLabel.Width = (int)(countryFlagPictureBox.Width * 3);
             countryNameLabel.Location = new Point(gapX, countryFlagPictureBox.Location.Y + countryFlagPictureBox.Height + 2);
             countryNameLabel.Font = new Font(this.Font.FontFamily, 12);
             countryNameLabel.TextAlign = ContentAlignment.MiddleLeft;
 
             currencyNameLabel = new Label();
-            currencyNameLabel.Width = verticalLineLabel0.Location.X - countryNameLabel.Width;
             currencyNameLabel.Height = this.Height - gapY * 2;
             currencyNameLabel.Font = new Font(this.Font.FontFamily, rateDisplayFontSize);
 
@@ -293,11 +292,13 @@ namespace HME_RateDisplay
                 currencyNameLabel.Location = new Point(0 , gapY);
                 currencyNameLabel.Width = verticalLineLabel0.Location.X - gapX * 2;
                 currencyNameLabel.TextAlign = ContentAlignment.MiddleCenter;
-                currencyNameLabel.ForeColor = Color.FromArgb(0, 153, 153);
-                denomLabel.ForeColor = Color.FromArgb(0, 153, 153);
 
-                currencyBuyLabel.ForeColor = Color.FromArgb(0, 153, 153);
-                currencySellLabel.ForeColor = Color.FromArgb(0, 153, 153);
+                Color headerColor = Color.FromArgb(128, 255, 255);
+                
+                currencyNameLabel.ForeColor = headerColor;
+                denomLabel.ForeColor = headerColor;
+                currencyBuyLabel.ForeColor = headerColor;
+                currencySellLabel.ForeColor = headerColor;
 
                 currencyBuyLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX * 2;
                 currencySellLabel.Width = verticalLineLabel2.Location.X - verticalLineLabel1.Location.X - gapX * 2;
@@ -306,8 +307,9 @@ namespace HME_RateDisplay
             {
                 currencyNameLabel.Location = new Point(countryNameLabel.Location.X + countryNameLabel.Width + gapX,
                                             gapY);
-                currencyNameLabel.TextAlign = ContentAlignment.MiddleLeft;
-                currencyNameLabel.ForeColor = Color.White;
+                currencyNameLabel.Width = verticalLineLabel0.Location.X - (countryNameLabel.Location.X + countryNameLabel.Width + gapX);
+                currencyNameLabel.TextAlign = ContentAlignment.MiddleRight;
+                currencyNameLabel.ForeColor = Color.White;        
                 denomLabel.ForeColor = Color.White;
                 currencyBuyLabel.ForeColor = Color.LawnGreen;
                 currencySellLabel.ForeColor = Color.Yellow;
