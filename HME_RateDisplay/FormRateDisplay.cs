@@ -17,7 +17,7 @@ namespace HME_RateDisplay
         int currentStartIndex = -1;
         int currentStopIndex = -1;
         Button goBackButton;
-        int DISPLAY_INTERVAL = 10;
+        int DISPLAY_INTERVAL = 7;
 
         public FormRateDisplay()
         {
