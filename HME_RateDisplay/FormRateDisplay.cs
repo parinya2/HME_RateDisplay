@@ -99,6 +99,7 @@ namespace HME_RateDisplay
                                             totalCurrencyCount - 1;
                     }
                 }
+                ExchangeRateDataManager.LoadData();
                 this.rateDisplayContentPanel.FillDataIntoPanel(currentStartIndex, currentStopIndex);
             }           
         }
