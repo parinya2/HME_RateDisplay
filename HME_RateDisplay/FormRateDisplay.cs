@@ -60,7 +60,7 @@ namespace HME_RateDisplay
             FormMainMenu instanceFormMainMenu = FormsManager.GetFormMainMenu();
             instanceFormMainMenu.Visible = true;
             instanceFormMainMenu.Enabled = true;
-           
+            instanceFormMainMenu.RefreshUI();
             instanceFormMainMenu.BringToFront();
             this.Visible = false;
         }
@@ -100,6 +100,7 @@ namespace HME_RateDisplay
                     }
                 }
                 ExchangeRateDataManager.LoadData();
+                rateDisplayHeaderPanel.RefreshHeadertext();
                 this.rateDisplayContentPanel.FillDataIntoPanel(currentStartIndex, currentStopIndex);
             }           
         }
