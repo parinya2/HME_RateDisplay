@@ -108,6 +108,18 @@ namespace HME_RateDisplay
                 ExchangeRateDataManager.LoadData();
                 rateDisplayHeaderPanel.RefreshHeadertext();
                 this.rateDisplayContentPanel.FillDataIntoPanel(currentStartIndex, currentStopIndex);
+
+                int tmpDisplayRefreshInterval = ExchangeRateDataManager.GetDisplayRefreshInterval();
+                if (DISPLAY_INTERVAL != tmpDisplayRefreshInterval)
+                {
+                    DISPLAY_INTERVAL = tmpDisplayRefreshInterval;
+                    if (rateDisplaySignalClock != null)
+                    {
+                        rateDisplaySignalClock.StopClock();
+                    }
+                    rateDisplaySignalClock = new SignalClock(DISPLAY_INTERVAL * 100);
+                    rateDisplaySignalClock.TheTimeChanged += new SignalClock.SignalClockTickHandler(RateDisplaySignalClockHasChanged);                  
+                }
             }           
         }
     }
