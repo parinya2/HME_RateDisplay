@@ -17,14 +17,19 @@ namespace HME_RateDisplay
             return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         }
 
-        public static string GetTokenPath()
+        public static string GetCurrencyFilePath()
         {
             return GetExecutingPath() + "/Private/token";
         }
 
-        public static string GetToken2Path()
+        public static string GetLastUpdatedFilePath()
         {
             return GetExecutingPath() + "/Private/token2";
+        }
+
+        public static string GetRowCounPerPageMagicNumberFilePath()
+        {
+            return GetExecutingPath() + "/Private/token3";
         }
 
         public static string GetDailyReportPath()
@@ -35,7 +40,7 @@ namespace HME_RateDisplay
 
         static string ExtractEmailPassword()
         {
-            string text = "" + File.ReadAllText(GetTokenPath(), Encoding.UTF8);
+            string text = "" + File.ReadAllText(GetCurrencyFilePath(), Encoding.UTF8);
             text = text.Trim();
             StringBuilder result = new StringBuilder("");
             for (int i = 0; i < text.Length; i++)

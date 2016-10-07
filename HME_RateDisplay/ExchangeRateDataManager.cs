@@ -15,7 +15,8 @@ namespace HME_RateDisplay
         public static ArrayList currencyKeyArr;
         private string updatedTimeString;
         private string updatedDateString;
-
+        private int rowCountPerPageMagicNumber = Int32.MaxValue;
+        
         public ExchangeRateDataManager()
         {
             exchangeRateDataObjectDict = new Dictionary<string, ExchangeRateDataObject>();
@@ -65,6 +66,23 @@ namespace HME_RateDisplay
             instance.updatedDateString = text;
         }
 
+        public static int GetRowCountPerPageMagicNumber()
+        {
+            if (instance.rowCountPerPageMagicNumber == Int32.MaxValue)
+            { 
+                string tmp = File.ReadAllText(Util.GetRowCounPerPageMagicNumberFilePath());
+                try 
+                {
+                    instance.rowCountPerPageMagicNumber = Int32.Parse(tmp);
+                }
+                catch(Exception e)
+                {
+                    instance.rowCountPerPageMagicNumber = 0;
+                }            
+            }
+            return instance.rowCountPerPageMagicNumber;
+        }
+
         public static string GetUpdatedTimeString()
         {
             return instance.updatedTimeString;
@@ -77,11 +95,11 @@ namespace HME_RateDisplay
 
         public static void SaveData(String data)
         {
-            File.WriteAllText(Util.GetTokenPath(), data);
+            File.WriteAllText(Util.GetCurrencyFilePath(), data);
 
             DateTime date = DateTime.Now;
             string fullDateStr = date.ToString("dd/MM/yyyy HH:mm:ss");
-            File.WriteAllText(Util.GetToken2Path(), fullDateStr);
+            File.WriteAllText(Util.GetLastUpdatedFilePath(), fullDateStr);
         }
 
         public static void CreateDailyReport()
@@ -111,7 +129,7 @@ namespace HME_RateDisplay
 
         public static void LoadData()
         {
-            string dateTimeText = "" + File.ReadAllText(Util.GetToken2Path(), Encoding.UTF8);
+            string dateTimeText = "" + File.ReadAllText(Util.GetLastUpdatedFilePath(), Encoding.UTF8);
             string[] dateTimeArr = dateTimeText.Split(' ');
             if (dateTimeArr.Length == 2)
             {
@@ -120,7 +138,7 @@ namespace HME_RateDisplay
             }
 
             currencyKeyArr = new ArrayList();
-            string allText = "" + File.ReadAllText(Util.GetTokenPath(), Encoding.UTF8);
+            string allText = "" + File.ReadAllText(Util.GetCurrencyFilePath(), Encoding.UTF8);
             allText = allText.Trim();
             char separatorLv1 = '#';
             char separatorLv2 = ',';
