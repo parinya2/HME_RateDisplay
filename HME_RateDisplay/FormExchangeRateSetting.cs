@@ -19,6 +19,9 @@ namespace HME_RateDisplay
         RateDisplayHeaderPanel rateSettingHeaderPanel;
         RateSettingContentPanel rateSettingContentPanel;
 
+        Label displayRefreshIntervalLabel;
+        TextBox displayRefreshIntervalTextbox;
+
         String SAVE_SUCCESS = "SAVE_SUCCESS";
         String SAVE_ERROR_INVALID_CHAR = "SAVE_ERROR_INVALID_CHAR";
 
@@ -72,6 +75,22 @@ namespace HME_RateDisplay
             saveButton.Text = "บันทึกค่า";
             saveButton.Click += new EventHandler(SaveButtonClicked);
 
+            displayRefreshIntervalLabel = new Label();
+            displayRefreshIntervalLabel.Width = 280;
+            displayRefreshIntervalLabel.Height = 50;
+            displayRefreshIntervalLabel.Font = new Font(this.Font.FontFamily, 13);
+            displayRefreshIntervalLabel.Location = new Point(50, goBackButton.Location.Y);
+            displayRefreshIntervalLabel.Text = "ระยะเวลาสลับหน้าจอ (วินาที)";
+
+            displayRefreshIntervalTextbox = new TextBox();
+            displayRefreshIntervalTextbox.Width = 50;
+            displayRefreshIntervalTextbox.Height = 50;
+            displayRefreshIntervalTextbox.Font = new Font(this.Font.FontFamily, 13);
+            displayRefreshIntervalTextbox.Location = new Point(displayRefreshIntervalLabel.Location.X + displayRefreshIntervalLabel.Width, 
+                                                                goBackButton.Location.Y);
+            displayRefreshIntervalTextbox.MaxLength = 2;
+            displayRefreshIntervalTextbox.KeyPress += new KeyPressEventHandler(displayRefreshIntervalTextbox_KeyPress);
+
             rateSettingContentPanel = new RateSettingContentPanel(SCREEN_WIDTH, goBackButton.Location.Y - 50 - rateSettingHeaderPanel.Height);
             rateSettingContentPanel.Location = new Point(0, rateSettingHeaderPanel.Height);
 
@@ -81,6 +100,8 @@ namespace HME_RateDisplay
             horizontalLine.BackColor = rateSettingHeaderPanel.BackColor;
             horizontalLine.Location = new Point(0, rateSettingContentPanel.Location.Y + rateSettingContentPanel.Height + 20);
 
+            this.Controls.Add(displayRefreshIntervalLabel);
+            this.Controls.Add(displayRefreshIntervalTextbox);
             this.Controls.Add(rateSettingHeaderPanel);
             this.Controls.Add(rateSettingContentPanel);
             this.Controls.Add(goBackButton);
@@ -88,11 +109,17 @@ namespace HME_RateDisplay
             this.Controls.Add(horizontalLine);
         }
 
+        void displayRefreshIntervalTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
         public void RefreshUI()
         {
             ExchangeRateDataManager.LoadData();
             rateSettingContentPanel.FillDataIntoPanel();
             rateSettingHeaderPanel.RefreshHeadertext();
+            displayRefreshIntervalTextbox.Text = ExchangeRateDataManager.GetDisplayRefreshInterval() + "";
         }
 
         void SaveCompletedMessageBoxRightButtonClicked(object sender, EventArgs e)
@@ -116,7 +143,7 @@ namespace HME_RateDisplay
 
         void SaveButtonClicked(object sender, EventArgs e)
         {
-            String result = SaveExchangeRate();
+            String result = SaveEverything();
 
             fadeForm.Visible = true;
             fadeForm.BringToFront();
@@ -140,7 +167,7 @@ namespace HME_RateDisplay
 
         }
         
-        String SaveExchangeRate()
+        String SaveEverything()
         {
             StringBuilder sb = new StringBuilder("");
             RateSettingSingleDataRowPanel[] singleDataRowPanelList = rateSettingContentPanel.singleDataRowPanelList;
@@ -164,6 +191,17 @@ namespace HME_RateDisplay
             }
 
             ExchangeRateDataManager.SaveData(sb.ToString());
+
+            string intervalStr = displayRefreshIntervalTextbox.Text;
+            try
+            {
+                int interval = Int32.Parse(intervalStr);
+                ExchangeRateDataManager.SaveDisplayRefreshInterval(interval);
+            }
+            catch (Exception e)
+            {
+                ExchangeRateDataManager.SaveDisplayRefreshInterval(GlobalConfig.DEFAULT_DISPLAY_REFRESH_INTERVAL);
+            }
             return SAVE_SUCCESS;            
         }
 

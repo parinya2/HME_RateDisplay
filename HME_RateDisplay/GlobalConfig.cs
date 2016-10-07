@@ -15,5 +15,6 @@ namespace HME_RateDisplay
         public static Color RATE_DISPLAY_LINE_COLOR = Color.Gray;
         public static int RATE_DISPLAY_GAP_Y = 4;
         public static int RATE_DISPLAY_GAP_X = 4;
+        public static int DEFAULT_DISPLAY_REFRESH_INTERVAL = 7;
     }
 }

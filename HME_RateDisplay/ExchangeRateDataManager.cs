@@ -16,7 +16,8 @@ namespace HME_RateDisplay
         private string updatedTimeString;
         private string updatedDateString;
         private int rowCountPerPageMagicNumber = Int32.MaxValue;
-        
+        private int displayRefreshInterval = Int32.MaxValue;
+
         public ExchangeRateDataManager()
         {
             exchangeRateDataObjectDict = new Dictionary<string, ExchangeRateDataObject>();
@@ -83,6 +84,26 @@ namespace HME_RateDisplay
             return instance.rowCountPerPageMagicNumber;
         }
 
+        public static int GetDisplayRefreshInterval()
+        {
+            string tmp = File.ReadAllText(Util.GetDisplayRefreshIntervalFilePath());
+            try
+            {
+                instance.displayRefreshInterval = Int32.Parse(tmp);
+            }
+            catch (Exception e)
+            {
+                instance.displayRefreshInterval = GlobalConfig.DEFAULT_DISPLAY_REFRESH_INTERVAL;
+            }
+            
+            return instance.displayRefreshInterval;
+        }
+
+        public static void SetDisplayRefreshInterval(int interval)
+        {
+            instance.displayRefreshInterval = interval;
+        }
+
         public static string GetUpdatedTimeString()
         {
             return instance.updatedTimeString;
@@ -91,6 +112,11 @@ namespace HME_RateDisplay
         public static void SetUpdatedTimeString(string text)
         {
             instance.updatedTimeString = text;
+        }
+
+        public static void SaveDisplayRefreshInterval(int interval)
+        {
+            File.WriteAllText(Util.GetDisplayRefreshIntervalFilePath(), interval + "");
         }
 
         public static void SaveData(String data)

@@ -31,6 +31,11 @@ namespace HME_RateDisplay
             timer.Start();
         }
 
+        public void StopClock()
+        {
+            timer.Stop();
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (TheTime < 10)

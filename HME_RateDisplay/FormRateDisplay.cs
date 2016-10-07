@@ -17,7 +17,7 @@ namespace HME_RateDisplay
         int currentStartIndex = -1;
         int currentStopIndex = -1;
         Button goBackButton;
-        int DISPLAY_INTERVAL = 7;
+        int DISPLAY_INTERVAL = GlobalConfig.DEFAULT_DISPLAY_REFRESH_INTERVAL;
 
         public FormRateDisplay()
         {
@@ -25,9 +25,7 @@ namespace HME_RateDisplay
 
             this.Load += new EventHandler(OnFormLoaded);
 
-            rateDisplaySignalClock = new SignalClock(DISPLAY_INTERVAL * 100);
-            rateDisplaySignalClock.TheTimeChanged += new SignalClock.SignalClockTickHandler(RateDisplaySignalClockHasChanged);
-        }
+    }
 
         private void OnFormLoaded(object sender, System.EventArgs e)
         {
@@ -67,6 +65,14 @@ namespace HME_RateDisplay
 
         public void RefreshUI()
         {
+            DISPLAY_INTERVAL = ExchangeRateDataManager.GetDisplayRefreshInterval();
+            if (rateDisplaySignalClock != null)
+            {
+                rateDisplaySignalClock.StopClock();
+            }
+            rateDisplaySignalClock = new SignalClock(DISPLAY_INTERVAL * 100);
+            rateDisplaySignalClock.TheTimeChanged += new SignalClock.SignalClockTickHandler(RateDisplaySignalClockHasChanged);    
+
             ExchangeRateDataManager.LoadData();
 
             rateDisplayContentPanel.FillDataIntoPanel(0, 3);

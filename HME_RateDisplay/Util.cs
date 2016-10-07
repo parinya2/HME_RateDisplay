@@ -32,6 +32,11 @@ namespace HME_RateDisplay
             return GetExecutingPath() + "/Private/token3";
         }
 
+        public static string GetDisplayRefreshIntervalFilePath()
+        {
+            return GetExecutingPath() + "/Private/token4";
+        }
+
         public static string GetDailyReportPath()
         {
             string dateString = DateTime.Now.ToString("dd-MM-yyyy เวลา HH.mm.ss น.");
